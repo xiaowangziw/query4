@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* -----------H-ui前端框架-----------------------
+H-ui.admin.css v1.0
+Copyright H-ui Inc.
+http://www.H-ui.net
+date:2014.4.13
+Created & Modified by guojunhui.
+
+/*--------------------H-uiAdmin-------------------------*/
+
+h4{line-height:30px}
+html{height:100%}
+body{min-height:100%;position: relative}
+
+/*主要操作区*/
+.Hui-article{position: absolute; z-index:2;top:0;right:0;bottom:0;left:200px}
+/*选项卡导航*/
+.Hui-tabNav{height: 40px; padding-right:75px;background: #a2bed5 url(../images/acrossTab-bg.png) repeat-x 0 bottom;overflow:hidden; position:relative}
+.Hui-tabNav-wp{position:relative; height:40px;overflow:hidden;}
+.Hui-tabNav .acrossTab{ position:absolute; top:10px; left:0px}
+.loading {background:url(../images/loading_072.gif) no-repeat center; height:100px}
+.show_iframe iframe {position: absolute;bottom: 0;height: 100%;width: 100%}
+.Hui-tabNav-more {position: absolute;right:0px;width:70px;top:8px;display: none;}
+
+/*面包屑导航*/
+.Hui-breadcrumb{background-color:#F5F5F5;padding-left:20px;border-bottom: 1px solid #E5E5E5;line-height: 39px; height:39px}
+.Hui-breadcrumb span{ padding:0 5px}
+.Hui-articlebox{position: inherit;bottom: 0;left: 0; right:0;overflow: auto;z-index: 1}
+
+
+.acrossTab{height:29px; background:url(../images/acrossTab-bg.png) repeat-x 0 0; padding-top:1px}
+.acrossTab li,.acrossTab li em{background:url(../images/acrossTab.png) no-repeat 0 0}
+.acrossTab li{position:relative;float:left; display:inline-block; height:29px; line-height:29px; font-size:12px;cursor:pointer;padding:0 30px; white-space:nowrap;color:#282828; background-position:0 0}
+.acrossTab li em{position:absolute; width:23px;height:29px;right:-20px; top:0;z-index:50; background-position:right -30px}
+.acrossTab li:hover{background-position:0 -60px}
+.acrossTab li:hover em{background-position:right -90px}
+.acrossTab li.active{background-position:0 -120px; z-index:99}
+.acrossTab li.active em{background-position:right -150px}
+.acrossTab li i{position:absolute; display:block; width:13px; height:13px; top:50%; margin-top:-6px; right:5px; font-size:0; line-height:0; cursor:pointer; background:url(../images/acrossTab-close.png) no-repeat 0 0}
+.acrossTab li i:hover{background-position:0 bottom}
+
+/*4.12 返回顶部
+  Name:     mod_totop
+  Level:      Global
+  Example:    <a href="javascript:void(0)" class="toTop" title=backToTopTxt alt=backToTopTxt></a>
+  Explain:    返回顶部
+*/
+.toTop{position:fixed;display:block;width:48px;height:49px;text-indent:-9999em;overflow:hidden;right:20px;visibility:visible;bottom:10px;_position:absolute;_top:expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);background:url(../images/totop.png) no-repeat 0 0}
+.toTop:hover{background-position:-48px 0}
+
+.content-iframe{position:relative;font-size:14px;line-height:1.6;overflow:hidden;text-align:left}

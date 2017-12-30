@@ -1,274 +1,340 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: peter_peng
+  Date: 2017/5/4
+  Time: 下午2:29
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>销售数据查询</title>
+    <title>销售数据查询</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="${pageContext.request.contextPath}/AdminLTE/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
 
-<!-- js引用处 -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-easyui-1.4.2/datagrid-detailview.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <link href="${pageContext.request.contextPath}/aliyunoss/css/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.btn{
+			padding:3px 5px;
+			margin-right:3px;
+			margin-top:3px;
+			height:26px;width:62px;
+			font-size:12px;
+		}
+	</style>
 </head>
-<body>
-	<div id="pp_spu_list_tool" style="padding: 5px; height: auto;display:inline-block;">
-		<a href="javascript:void(0)" class="easyui-linkbutton addbtn" iconCls="icon-add" plain="true" onclick="add_spu_div_open()">添加</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton editbtn" iconCls="icon-edit" plain="true" onclick="edit_attr_name()">修改</a>
-			
-		<%--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="delete_attr_name();" plain="true">禁用</a>--%>
-	</div>
-	<div style="float:right;display:inline-block;height:35px;line-height:35px;">
-	  	SPU名称：<input type="text" name="spu_name" id="spu_name" class="easyui-textbox"> 
-		产品编号：<input type="text" name="skuNumber" id="skuNumber" class="easyui-textbox"> 
-		出厂编号: <input type="text" name="manufacturing" id="manufacturing" class="easyui-textbox"> 
-		品牌: 
-		<input id="brandNameSearch" class="easyui-combobox searchText" name="brandName" 
-			data-options="url:'${pageContext.request.contextPath}/spu/addLoadBrandData',method:'get',valueField:'id',textField:'name',panelHeight:'200',loadFilter:function(data){return data.datas}," 
-		    style="line-height: 20px; width: 120px; border: 1px solid #ccc">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">搜索</a>
-	</div>
-	<table id="pp_spu_list_dg" 
-	    class="easyui-datagrid admin-user-form" 
-		style="width:100%;" 
-		url="${pageContext.request.contextPath}/spu/queryAllData"
-		pagination="true" 
-		singleSelect="true" 
-		fitColumns="false" 
-		method='get' 
-		checkOnSelect="true"
-		data-options="rownumbers:true,loadFilter:pp_spu_list_dg,nowrap:false,striped:true,remoteSort:true">
-		<thead>
-			<tr>
-				<%--<th data-options="field:'ck',checkbox:true"></th>--%>
-				<th data-options="field:'id',hidden:true,width:80,align:'center'">id</th>
-				<th data-options="field:'state',width:80,align:'center'">状态</th>
-				<th data-options="field:'super_classify_id',hidden:true"></th>
-				<th data-options="field:'super_classify_name',width:150,align:'left'">一级级分类</th>
-				<th data-options="field:'classify_id',hidden:true"></th>
-				<th data-options="field:'classify_name',width:150,align:'left'">二级分类</th>
-				<th data-options="field:'second_classify_id',hidden:true"></th>
-				<th data-options="field:'second_classify_name',width:150,align:'left'">三级分类</th>
-				<th data-options="field:'brandId',hidden:true"></th>
-				<th data-options="field:'brand_name',width:200,align:'left'">品牌</th>
-				<th data-options="field:'key_attr_name_values',width:180,align:'center'">公共属性</th>
-				<th data-options="field:'sale_attr_name_values',width:100,align:'center'">销售属性</th>
-				<th data-options="field:'spuName',width:300,align:'center'">显示名称</th>
-				<%-- <shiro:hasAnyRoles name="${superAdmin },${saleManager},${productManager}">
-					<th data-options="field:'action',width:100,align:'center'" formatter="formatAction">操作</th>
-				</shiro:hasAnyRoles> --%>
-			</tr>
-		</thead>
-	</table>
-	
-		<!-- 产品经理发布产品时填写库存的对话框 -->
-	<div id="exportNewSku" class="easyui-window" data-options="modal:true" closed="true" style="width: 380px; height: 230px; padding: 10px"
-	title="批量上传产品">
-	<form id="importForm" enctype="multipart/form-data"  onsubmit="return false;" action="${pageContext.request.contextPath}/excel/importNewSpuProduct">
-		<div style="margin-bottom:20px">
-			<div>选择上传文件:</div>
-			<input name="file" id="file" type="file"  style="width:100%">
-		</div>
-			<p style="color: red">以后所有库存都不导入，全为0</p>
-<!-- 		<div style="margin-bottom:20px">
-			<div>选择是否是清潋品牌:</div>
-			<select id="whether" name="whether" class="easyui-combobox typeText" style="width: 100%">
-						<option value="2">否</option>
-						<option value="1">是</option>
-			</select>
-		</div> -->
-		<div class="modal-footer" style="text-align: center; margin: auto;">
-			<button class="btn" onclick="closeNewDialog()">关闭</button>
-			<button class="btn" id="saveNewBtn"  onclick="saveNewDialog()">保存</button>
-		</div>
-		</form>
-	</div>
-	
-	<div id="importUpdateSku" class="easyui-window" data-options="modal:true" closed="true" style="width: 380px; height: 230px; padding: 10px"
-	title="批量修改产品">
-	<form id="importUpdateForm" enctype="multipart/form-data"  onsubmit="return false;" action="${pageContext.request.contextPath}/excel/importUpdateSpuProduct">
-		<div style="margin-bottom:20px">
-			<div>选择上传文件:</div>
-			<input name="updateFile" id="updateFile" type="file"  style="width:100%">
-		</div>
-		<p style="color: red">以后所有库存都不导入，全为0</p>
-	<!-- 	<div style="margin-bottom:20px">
-			<div>选择是否是清潋品牌:</div>
-			<select id="isQinglianPro" name="whether" class="easyui-combobox typeText" style="width: 100%">
-						<option value="2">否</option>
-						<option value="1">是</option>
-			</select>
-		</div> -->
-		<div class="modal-footer" style="text-align: center; margin: auto;">
-			<button class="btn" onclick="closeUpdateDialog()">关闭</button>
-			<button class="btn" id="saveUpdateBtn" onclick="saveUpdateDialog()">保存</button>
-		</div>
-		</form>
-	</div>
-	
-	
-	</body>
-	
-	<script type="text/javascript">
-		// $.messager.confirm();
-		var list = $("#pp_spu_list_dg"),
-			stateText=['下架','禁用',"上架"];
-		function changeState(id,state){
-			$.messager.confirm("提示","是否确认"+stateText[state],function(e){
-				if(state===2){
-					state=0;
-				}else if(state===0){
-					state=2;	
-				}
-				if(e){
-					$.get("${pageContext.request.contextPath}/spu/spuUpOrDown",{
-						spu_id:id,
-						state:state,
-					}).then(function(res){
-						$.messager.alert("info","修改成功");
-						// doSearch();
-						list.datagrid("reload");
-					}).fail(function(res){
-						$.messager.alert("err","修改失败");
-					});
-				}
-			});
-		}
-		function add_spu_div_open() {
-			window.parent.closeTab("SPU管理");
-			window.parent.showTabs("${pageContext.request.contextPath}/maint/spuDatagridOpen", "SPU管理");
-		}
-		//修改当前行
-		function edit_attr_name() {
-			var row = $("#pp_spu_list_dg").datagrid('getSelected');
-			if (row) {
-				window.parent.closeTab("SPU管理");
-				window.parent.showTabs("${pageContext.request.contextPath}/maint/spuDatagridOpen?id=" + row.id, "SPU管理");
-			} else {
-				$.messager.alert("警告","必须有选中一个有效的行");
-			}
-		}
+<body style="background-color:#ecf0f5">
+<div class="content">
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+           销售数据查询
+            <small>销售数据查询</small>
+        </h1>
+      
+    </section>
 
-		function delete_attr_name(){
-			var row=list.datagrid('getSelected');
-			if (row) {
-				changeState(row.id,1);
-			} else {
-				$.messager.alert("警告","必须有选中一个有效的行");
-			}
-		}
+       <div class="box">
+        <div class="box-header">
+            <div class="row">
+                <div class="col-sm-12">
+                 <div class="col-sm-3" style="width: 200px">
+                        <div class="dataTables_length" >
+                        <label><span style="font-weight:bold;">省&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <select id="province" name="province" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                   	<option value="none">--请选择省--</option>
+                                </select>
+                          </label>
+                        </div>
+                  </div>
+                   <div class="col-sm-3" style="width: 200px">
+                        <div class="dataTables_length" >
+                         <label><span style="font-weight:bold;">市&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                 <select id="city" name="city" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                    <option value="none">--请选择市--</option>
+                                </select>
+                          </label>
+                        </div>
+                  </div>
+			     
 
-		//刷新
-		function doSearch() {
-			list.datagrid("load", {
-				spu_brand_id:$("#brandNameSearch").combobox("getValue"),
-				product_number:$("#skuNumber").val(),
-				manufacturing_code:$("#manufacturing").val(),
-				spu_name:$("#spu_name").val()
-			});	
-		}
+                  <div class="col-sm-3" style="width: 200px">
+                        <div class="dataTables_length" >
+                            <label><span style="font-weight:bold;">销售员&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <select name="order-status" id="order-status" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                    <option value="">请选择销售员</option>
+                                    <option value="ORDER_SAVED">张三</option>
+                                  
+                                </select>
+                            </label>
+                        </div>
+                  </div>
+                  <div class="col-sm-3" style="width: 200px">
+                        <div class="dataTables_length" >
+                            <label><span style="font-weight:bold;">品类&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <select name="order-status" id="order-status" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                    <option value="">请选择品类</option>
+                                    <option value="ORDER_SAVED">排气系统</option>
+                                   
+                                </select>
+                            </label>
+                        </div>
+                  </div>
+                  
+                  
+                </div>
+                <div class="col-sm-12">
+                  
+                      <div class="form-group">
+                        <label  class="col-sm-3 control-label" style="text-align: right;margin-top:8px;margin-right:-15px;padding-left: 0px;;width:72px">订单日期</label>
+                        <div class="col-sm-9" style="width: 15%;">
+                          <input type="date" class="form-control" id="orderTime"/>
+                        </div>
+                        <label  class="col-sm-3 control-label" style="text-align: right;margin-top:8px;margin-right:-15px;padding-left: 0px;;width:30px">至</label>
+                        <div class="col-sm-9" style="width: 15%">
+                          <input type="date" class="form-control" id="orderTime"/>
+                        </div>  
+                  </div>
+                </div>
+                <div class="col-sm-12" style="margin-top: 15px">
+                  
+                  <div class="btn-group" role="group" aria-label="..." style="float:left">
+                              <button onclick="javascript:window.location.reload()" type="button" class="btn btn-primary">
+                                  查询
+                              </button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+        <!-- 如果用户列表非空 -->
+        <table id="_tab" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>省</th>
+                <th>市</th>
+                <th>销售员</th>
+                <th>品类</th>
+                <th>数量</th>
+                <th>金额</th>
+               
+            </tr>
+            </thead>
+            <tbody>
 
-		
-	</script>
-	<script type="text/javascript">
-		/*产品经理对产品状态进行管理*/
-		function formatAction(value, row, index) {
-			if (row.status == 'new') {
-				return '<a href="#" onclick="changeState(\'putAway\',this)">上架</a> ';
-			} else if (row.status == 'putaway') {
-				return '<a href="#" onclick="changeState(\'offShelf\',this)">下架</a> ';
-			} else if (row.status == 'offshelf') {
-				return '<a href="#" onclick="changeState(\'putAway\',this)">上架</a> ';
-			}
-		}
-		// function changeState
-		var pp_spu_list_dg = new MTVACOMP.DataGrid($('#pp_spu_list_dg'));
-		pp_spu_list_dg.setGridType(new MTVACOMP.NomalGrid());
-		//0是上架 显示的时候应该点击上级 反向的
-		
-		pp_spu_list_dg = function (data) {
-			var formatData = {
-				row:[],
-				total:0
-			},
-			spuList = data.content||[];
-			formatData.rows=spuList.map(function(item,index){
-				item.state='<a href="javascript:changeState('+item.id+","+item.state+')">'+stateText[item.state]+'</a>';
-				return item;
-			});
-			formatData.total =  data.totalElements;
-			return formatData;
-		}
-		function closeUpdateDialog(){
-			//$("#isQinglianPro").combobox("setValue","");
-			$("#updateFile").val("");
-			$('#importUpdateSku').window('close');
-		}
-		function importUpdateExcel(){
-			$('#importUpdateSku').window('open');
-		}
-		function saveUpdateDialog(){
-			$.messager.confirm("警告", "是否将当前上传的表格，覆盖现有平台上此品牌所有的数据，上传后平台此品牌数据将以此表格为基准，以前的数据无法找回，此操作非常的危险！！！", function(state) {
-				if(state){
-					$.messager.confirm("警告", "你已经确认覆盖平台此品牌所有的数据，以前的数据无法找回，此操作非常的危险，想清楚了吗？", function(state) {
-						if(state){
-							$("#saveUpdateBtn").attr("disabled",true);
-							var formData = new FormData($("#importUpdateForm")[0]);
-							$.ajax({
-							  url: "${pageContext.request.contextPath}/excel/importUpdateSpuProduct",
-							  type: "POST",
-							  data: formData,
-							  processData: false,  // 不处理数据
-							  contentType: false,   // 不设置内容类型
-							  success:function(data){
-								  if(data.state !="success"){
-									  $.messager.alert("警告",data.msg+",错误码为:"+data.state);
-								  }else{
-									  $.messager.alert("警告","上传成功，请刷新查看数据");
-									  closeUpdateDialog();
-									  $("#pp_spu_list_dg").datagrid("reload");
-								  }
-								  $("#saveUpdateBtn").attr("disabled",false);
-							  }
-							});
-						}
-					});
+        </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${pageContext.request.contextPath}/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/aliyunoss/js/jquery-confirm.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/fastclick/fastclick.js"></script>
+<script>
+$(function(){
+	//加载省数据
+	$.ajax({
+	      type: 'GET',
+	      url: '${pageContext.request.contextPath}/getProvinces',
+	      contentType:'application/json;charset=UTF-8',
+	       success: function (response) {
+	    	   //遍历省市数据,并把里面省的数据追加到option选项中
+	           for (var i=0; i<response.length; i++) {
+	               var option = document.createElement("option");
+	               option.value = response[i].provincnId;
+	               option.innerHTML = response[i].province;
+	               province.appendChild(option);
+	           }
 				}
 			});
-		}
-		
-		
-		function importNewExcel(){
-			$('#exportNewSku').window('open');
-		}
-		function clearNewDiglog(){
-			//$("#isQinglian").combobox("setValue","");
-			$("#file").val("");
-		}
-		function saveNewDialog(){
-			$("#saveNewBtn").attr("disabled",true);
-			var formData = new FormData($("#importForm")[0]);
-			$.ajax({
-			  url: "${pageContext.request.contextPath}/excel/importNewSpuProduct",
-			  type: "POST",
-			  data: formData,
-			  processData: false,  // 不处理数据
-			  contentType: false,   // 不设置内容类型
-			  success:function(data){
-				  if(data.state !="success"){
-					  $.messager.alert("警告",data.msg+",错误码为:"+data.state);
-				  }else{
-					  $.messager.alert("警告","上传成功，请刷新查看数据");
-					  closeNewDialog();
-					  $("#pp_spu_list_dg").datagrid("reload");
-				  }
-				  $("#saveNewBtn").attr("disabled",false);
-			  }
+	
+	var province = document.getElementById("province");
+	    //省级下拉框发生改变事件
+	    province.onchange = function() {
+	      var cities;
+	      //遍历省市数据,把省级下点击的那一个选项的值和省市数据中的
+	      //省级数据对比,如果相等,取出当前的市的数据
+	      $.ajax({
+	      type: 'GET',
+	      url: '${pageContext.request.contextPath}/getCities?proid='+this.value,
+	      contentType:'application/json;charset=UTF-8',
+	       success: function (response) {
+	    	   //遍历省市数据,并把里面省的数据追加到option选项中
+	     /*        for (var i=0; i<response.length; i++) {
+	          if (proid == response[i].cityId) {
+	              cities = response[i].city;
+	          }
+	      } */
+	      //获得市级下拉框对象
+	      var city = document.getElementById("city");
+	      //每次点击省级后,市级初始化,避免高级重复追加
+	      city.innerHTML = "<option value='none'>--请选择市--</option>";
+	      //遍历市级数据,并取出市级数据,追加到市级对象中
+	      for (var i=0; i<response.length; i++) {
+	          var option = document.createElement("option");
+	          option.innerHTML = response[i].city;
+	          option.value = response[i].cityId;
+	          city.appendChild(option);
+	      }
+				}
 			});
-		}
-		function closeNewDialog(){
-			$('#exportNewSku').window('close');
-			clearNewDiglog();
-		}
-	</script>
+	  
+	    }
+});
+
+	//当你需要多条件查询，你可以调用此方法，动态修改参数传给服务器
+	window.reloadTable = function(oTable,states,orderNo) {
+		var states = $(states).val();
+		var orderNo = $(orderNo).val();
+		var param = {
+			"orderState" : states,
+			"orderNo"  : orderNo
+		};
+		oTable.settings()[0].ajax.data = param;
+		oTable.ajax.reload();
+	}
+	
+	var _tab;
+	$(function () {
+		//初始化表格
+		var No=0;
+		_tab = $('#_tab').DataTable( {
+	        "paging": true,
+	        "lengthChange": false,
+	        "searching": false,
+	        "ordering": false,
+	        "info": true,
+	        "autoWidth": false,
+	        "scrollX": true,
+	        "bInfo":false,
+	        "serverSide":true,   //启用服务器端分页
+	        "language":{"url":"${pageContext.request.contextPath}/AdminLTE/plugins/datatables/language.json"},
+	        "ajax":{"url":"${pageContext.request.contextPath}/query","type":"post"},
+	        "columns": [
+	            /* { "data":"id" }, */
+	            { "data":null },
+	            { "data":null },
+	            { "data":null },
+	            { "data":null },
+	            { "data":null },
+	            { "data":null }
+	        ],
+	        "columnDefs": [
+				{
+				    targets: 0,
+				    data: null,
+				    render: function (data) {
+				    	
+	                    var btn = "";
+	                    if(data.customerId!=""&&data.customerId!=null){
+	                    	btn = "<font style='font-size : 14px'>"+data.insideOrderNo+"</font>";           	
+	                    }
+				        return data;
+				    }
+				},
+				{
+				    targets: 1,
+				    data: null,
+				    render: function (data) {
+				    	
+	                    var btn = "";
+	                    if(data.insideOrderNo!=""&&data.insideOrderNo!=null){
+	                    	btn = "<font style='font-size : 14px'>"+data.customerId+"</font>";           	
+	                    }
+				        return data;
+				    }
+				},
+				{
+				    targets: 2,
+				    data: null,
+				    render: function (data) {
+				    	
+	                    var btn = "";
+	                    if(data.skuOptDescipiton!=""&&data.skuOptDescipiton!=null){
+	                    	btn = "<font style='font-size : 12px'>商品名称："+data.goodsName+"<br/>"+data.skuOptDescipiton +"</font>";           	
+	                    }
+				        return data;
+				    }
+				},
+				{
+				    targets: 4,
+				    data: null,
+				    render: function (data) {
+				    	
+	                    var btn = "";
+	                    if(data.payState!=""&&data.payState!=null){
+	                    	if(data.payState == "15"){
+	                    		btn ='<font style="font-size : 12px">支付失败</font></br>';
+	                    	}else if(data.payState == "20"){
+	                    		btn ='<font style="font-size : 12px">支付成功</font></br>';
+	                    	}else if(data.payState == "22"){
+	                    		btn ='<font style="font-size : 12px">部分还款</font></br>';
+	                    	}else if(data.payState == "23"){
+	                    		btn ='<font style="font-size : 12px">确认支付</font></br>';
+	                    	}else if(data.payState == "25"){
+	                    		btn ='<font style="font-size : 12px">结清</font></br>';
+	                    	}else if(data.payState == "30"){
+	                    		btn ='<font style="font-size : 12px">支付取消</font></br>';
+	                    	}else if(data.payState == "35"){
+	                    		btn ='<font style="font-size : 12px">退货</font></br>';
+	                    	}else if(data.payState == "110"){
+	                    		btn ='<font style="font-size : 12px">支付失败(超流量阀)</font></br>';
+	                    	}else{
+	                    		btn ='<font style="font-size : 12px">'+data.payState+'</font></br>';
+	                    	}
+	                    	
+	                    }
+				        return data;
+				    }
+				},
+				{
+				    targets: 5,
+				    data: null,
+				    render: function (data) {
+				    	
+	                    var btn = "";
+	                    if(data.fOrderID!=""&&data.fOrderID!=null){
+	                    	btn = "<font style='font-size : 14px'>"+data.fOrderID+"</font>";           	
+	                    }
+// 				        return btn;
+						return data;
+				    }
+				}  ]
+	    } ).on('preXhr.dt',function(e,settings,data) {
+			No=0;
+	    } );
+	 });
+	
+
+</script>
+
+
+
+</body>
+</html>
+
+
