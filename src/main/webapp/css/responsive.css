@@ -1,0 +1,628 @@
+@charset "utf-8";
+/*tablet vertical*/
+@media (max-width: 767px){
+	/*auction Product*/
+.auction-headline {font-size: 25px;color: #3c3c3b;}
+.auction-price {font-size:18px;color:#be1522;}
+.auction-state-st {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 400px;}
+.row {margin-left:-5px;  margin-right:-5px;}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{ padding-left: 5px;padding-right: 5px;}	
+
+.paddingZero{padding-left:0;padding-right:0;}
+.padding10{padding-left:10px;padding-right:10px;}
+.padding15{padding-left:15px;padding-right:15px;}
+
+.marginZero{ margin-left:0; margin-right:0;}
+.marginNeg10{ margin-left:-10px; margin-right:-10px;}
+
+/*header*/
+body{ padding-top:0;}
+header.row{ background-color:#3c3c3b; margin-left: -15px;margin-right: -15px;padding: 10px 0px;height: auto;}
+header h1{ margin-top:0; margin-bottom:0;}
+header a.navbar-brand{ display:block; width:100%; padding:0;}
+
+header .headSearch{ margin-top:0;}
+header .input-group{ width:100%;}
+header .input-group .form-control{ width:80%; height:28px;border: 1px solid #BEBEBE;}
+header .input-group button{width:20%; height:28px; border:#fff solid 1px;}
+
+header .top-cart .topShopCart{ font-size:22px; color:#fff;}
+header [class*="col-xs"] {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+/*footer*/
+footer{ margin-top:10px; background-color:transparent; padding-top:0;}
+footer .footerBottom{ border:none; padding-top:0; padding-bottom:30px;}
+
+/*index page*/
+.indexMainBlock{ margin-left:-15px; margin-right:-15px;}
+
+.IndexCarbrand{ overflow:hidden;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px; }
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl li {margin-top: 20px;}
+.IndexCarbrand .indexCarBUl li .indexCarBLi{ height:auto;}
+.recommendCon .recUl .recLi{ text-align:center;}
+
+.IndexCarbrand .carousel-control{top: 20px;}
+.IndexCarbrand .carousel-control .icon-prev, 
+.IndexCarbrand .carousel-control .glyphicon-chevron-left{margin-left: -5px;}
+.IndexCarbrand .carousel-control .icon-next, 
+.IndexCarbrand  .carousel-control .glyphicon-chevron-right{margin-right: -6px;}
+
+.indexAD {margin-top: 10px;}
+.recommendCon { margin-top: 20px;}
+
+.mobileNav{ margin-top:20px; margin-bottom:0;}
+.mobileNav li span{width:50px; height:50px; display: table-cell; vertical-align:middle; background-color:#3c3c3b; border-radius:50%;}
+.mobileNav li a{ display:inline-block;}
+.mobileNav i{ color:#fff; font-size:26px;}
+.mobileNav p{ margin-top:10px; }
+
+.mobileMenuCon{position:fixed; bottom:0;left: 0px;}
+.mobileMenu{   background-color:#3c3c3b; margin-bottom:0; padding-top:6px;}
+.mobileMenu span{width:50px; height:28px; display: table-cell; vertical-align:bottom;}
+.mobileMenu span.carsIcon{ background:url(../image/menu_icon1.png) center top /32px auto no-repeat; }
+.mobileMenu span.partsIcon{background:url(../image/menu_icon2.png) center top /28px auto no-repeat; }
+.mobileMenu a{ display:inline-block;}
+.mobileMenu i{ color:#fff; font-size:24px;}
+.mobileMenu p{ color:#fff; margin-bottom:5px; }
+
+.recommendCon .recTitleM{ padding-bottom:5px;}
+.recommendCon .recTitleM i,
+.recommendCon .recTitleM a{ font-size:14px;}
+
+/*car brand*/
+.carBrandTopic .letters{ margin-top:10px; background-color:#F6F5F4; padding-top: 6px;padding-bottom: 6px; }
+.carBrandTopic .letters div.col-lg-2 label{margin-bottom: 0px;}
+.carBrandTopic .letters div.col-lg-2{ text-align:left;}
+.carBrandTopic .letters i{ font-size:15px; line-height:20px;}
+.carBrandTopic .carIndexLink{ clear:both;border:#ddd solid 1px; margin-top:8px; display:none;}
+.carBrandTopic .carIndexLink li{ text-align:center; border:#ddd solid 1px;}
+.carBrandTopic .carIndexLink li a{ display:block; padding:5px 0;}
+#myCarType ul li{ width:100%;}
+
+.carBrandTopic .letter{ margin-top:20px !important;}
+
+/* list page */
+.proList .rightCon{ padding-left:0;}
+.fliterPro .fliterList{padding: 10px 5px;}
+.fliterPro .fliterList .fliterConTitle{width: 68px;}
+.fliterPro .fliterList .fliterCarType .firstLabel{max-width:400px;height:18px;overflow: hidden;padding-left: 0px;margin-left: 0px;}
+.fliterPro .fliterList .fliterCarType label input{ position:static; float:left; margin-left:0;}
+.fliterPro .fliterList .fliterCarType .secondLabel{margin: 2px 0 0px 16px;}
+
+.fliterPro .selectedType .CarTypeCon{ padding:5px; left:-164px;}
+.fliterPro #carTypeFileId .typeItem .selectInput {width: 608px;}
+.proListCon .proList li .thumbnail{ text-align:center; /*height:430px;*/}
+.product-list-show .show-pic {/* width: 400px; height: 296px;*/}
+.product-list-show .thumbnail .show-pic img{ /*max-width:296px;*/}
+
+.proListCon .sortCon{ margin-top:20px; padding-top:0;}
+
+.proListPage nav{ float:none;}
+
+/*************** detail page **************/
+.detailContent .proIMG,
+.detailContent .detailSku{ width:100%; height:auto;margin:0 auto 10px;}
+
+.detailContent .proBigImage{width:100%; height:auto;}
+
+.detailContent .carousel-control.left, 
+.detailContent .carousel-control.right {line-height:120px;}
+
+.detailContent .rightCon .proPrice{ padding-top:10px; margin:10px 0px;}
+.detailContent .rightCon .proPrice dl{ margin-bottom:10px;}
+.detailContent .rightCon .proPrice dl dd {font-size:14px;}
+
+.detailContent .rightCon .dl-horizontal dt { float: left; clear: left; text-align: right;}
+
+.detailContent .rightCon .rightBottom .ChangeNumCon #cartPlus{ float:left;}
+
+.detailContent .PackageInner .tabTitle li {width:80px;}
+.detailContent .recPackage > .PackageInner >.nav > li > a{ padding:6px 8px;}
+
+.detailContent .PackageInner .suits ul.recList{ width:100% !important;}
+.detailContent .PackageInner .suits ul.recList li{ width:25%; padding-bottom:10px; text-align:center;}
+.detailContent .PackageInner .suits ul.recList li .recPerPro{ float:none; margin-right:0; display:inline-block;}
+.detailContent .PackageInner .suits ul.recList li .recPerPro .p-name,
+.detailContent .PackageInner .suits ul.recList li .recPerPro .p-name{ text-align:left;}
+.detailContent .PackageInner .suits ul.recList i,
+.detailContent .PackageInner i.recpro-equal{ display:none;}
+.detailContent .PackageInner .infos{ text-align:center;}
+.detailContent .PackageInner .infos div{padding-left:0;}
+
+.detailContent .detailOuter {padding-right: 0px; padding-left: 0;}
+.detailContent .detailDesCon .tabTitle li{width:59px; font-size:12px;}
+.detailContent .detailOuter > .detailDesCon >.nav > li > a{ padding:6px 0px;}
+.detailContent .detailDesCon .tab-content{ padding:5px; min-height:150px;}
+
+/*****generate order*****/
+.generate-order h2{ border-bottom:#be1522 solid 2px; padding-bottom:10px;}
+.generate-order .panel-default{ border:none;}
+.generate-order .panel-body{ padding:0;}
+.generate-order .generate-table .receipt-image-box{width:50px; height:50px;}
+.generate-order .generate-table .receipt-image-box img{ max-width:50px;}
+.generate-order .generate-table .proName a{ display:inline-block; width:300px;white-space:normal;}
+
+/***** forget password *****/
+.forgetPassword .retrieve-text {width: auto;margin-left: -10px;margin-right: -10px;}
+
+/***** login page *****/
+header.row.loginHead{ background-color:#fff;}
+header.row.loginHead h3{ margin-top:10px; font-size:14px;}
+.login-jumbotron{ margin-top:0; }
+.login-jumbotron .valideCode { padding-left:0;}
+
+/***** no product *****/
+.noneProduct .none-product-icon,
+.noneProduct .none-product-left,
+.noneProduct .text-margin-left{float: none; text-align: center;}
+.noneProduct .text-margin-left{ margin-left:0;}
+
+/***** register *****/
+.register .form-horizontal .control-label{ text-align:right;}
+
+/***** about us *****/
+.myAccount.aboutUs{ margin-top:10px;}
+.aboutUs .aboutMenu{ background-color: #F6F5F4; line-height:30px; padding:10px 5px; }
+.aboutUs .aboutMenu h3{ font-size:14px; margin:0; font-weight:bold;}
+.aboutUs .aboutMenu i{ font-size:15px;}
+.myAccount.aboutUs .myAccountNav {padding: 10px; background:#f9f9f9; border:#eee solid 1px; display:none;}
+.aboutUs .news-magrin-none{ text-align:center; font-size:16px;margin-top:20px; }
+.myAccount.aboutUs .about-font{ margin-top:10px;}
+
+/****************************my account********************************/
+/***** index *****/
+.myAccountIndex .welcome{ border-bottom:#ddd solid 1px;}
+.myAccountIndex .disc{border-left:#ddd solid 1px;}
+
+.myAccount .myAccountNavMobile{ margin-top:10px;}
+.myAccount .myAccountNavMobile dl{ border:#DFDDD8 solid 1px; margin-top:15px;}
+.myAccount .myAccountNavMobile dl.current{ padding-bottom:10px;}
+.myAccount .myAccountNavMobile dl dt{ background-color:#eee;padding:10px;}
+.myAccount .myAccountNavMobile dl dt i{ margin-right:20px; font-size:16px;}
+.myAccount .myAccountNavMobile dl dt i.marginZero{ margin-right:0;}
+.myAccount .myAccountNavMobile dl dd{  font-size:13px;line-height: 30px;}
+.myAccount .myAccountNavMobile dl dd a{ display:block;}
+.myAccount .myAccountNavMobile dl dd i{ font-size:12px; padding-left:13px; margin-right:18px;}
+
+/***** address manage*****/
+#newAddressForm .modal-content{ padding:5px;}
+
+/****** my favorite *****/
+.myAccountAll .row .col-lg-1.selectAll { margin-left: 9px;}
+
+/***** my order *****/
+.myAccountAll .table tbody .centerPlace .imgPlace div{ width:360px; white-space:normal;}
+.myAccountAll .table tbody .tr-th td .express{margin-left: 0px;}
+/***** order detail *****/
+.myAccountAll .shoppingTb tr td.proName{ white-space:normal; text-align:left;}
+
+/***** my account info *****/
+.myAccountAll .form-horizontal{ padding:5px;}
+
+/***** pay result *****/
+.pay-result ul li:first-child img{ margin-left:0;}
+.pay-result{ text-align:center;}
+
+/*.shopping-cart .cart-body{border:#f0f0f0 solid 1px;}*/
+.shopping-cart .cart-body .show-pro-pic{ width:52px; height:52px;}
+.shopping-cart .cart-body .show-pro-pic img{ width:50px; height:50px; padding:1px;}
+.shopping-cart .shopNum{ margin-top:3px;}
+
+/*****  sales volume traders  *****/
+.tradeTb select#brands,
+.salesTb select#brands{ max-width:100px;}
+.tradeTb .proName{ display:inline-block; max-width:180px;white-space: normal;}
+
+.table-responsive.sales-volume{ border:none;}
+.table-responsive.sales-volume .dateTime{ padding-bottom:20px;}
+.table-responsive.sales-volume .dateTime .form-group{margin-bottom:0;}
+
+.table-responsive.sales-volume .form-inline{ padding-bottom:0;}
+.table-responsive.sales-volume .lastBtn{ margin-top:0;}
+.table-responsive.sales-volume .fliterBtn{ padding-bottom:20px;overflow: hidden;}
+#ordinaryInvoice span,#VAT span{height:30px;line-height:30px;text-align: left;}
+
+/**
+右下角菜单
+***/
+.pppcar-toolbar-foolter .item:hover a i{-moz-border-radius: 0;border-radius:0;background-color: #7a6e6e; }
+.pppcar-toolbar-foolter{opacity:0.5;}
+}
+@media (max-width: 320px){
+	/*auction Product*/
+.auction-headline {font-size: 16px;color: #3c3c3b;}
+.auction-price {font-size:14px;color:#be1522;}
+.auction-state-st {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+#ordinaryInvoice span,#VAT span{height:30px;line-height:30px;text-align: left;}
+}
+@media (min-width: 320px) and (max-width: 479px){
+	/*auction Product*/
+.auction-headline {font-size: 16px;color: #3c3c3b;}
+.auction-price {font-size:14px;color:#be1522;}
+.auction-state-st {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+	
+.baiduMap{height: 240px;width: 300px;}
+#ordinaryInvoice span,#VAT span{height:30px;line-height:30px;text-align: left;}
+	
+header .logo.col-xs-3{ padding-left: 5px;padding-right:0;}
+header .top-cart.col-xs-1{ padding-left:0;}
+header .input-group .form-control,
+header .input-group button{ height:22px;padding: 0px 6px;}
+header .top-cart .topShopCart{ font-size:18px; line-height:20px;}
+header a.navbar-brand{ height:auto;margin-top: 4px;}
+
+/*****list page*****/
+.fliterPro #carTypeFileId .typeItem .selectInput{ width:288px;}
+.proListCon .proList li{/* height: 275.5px; */height: auto;}
+.proListCon .proList li .thumbnail{ /*height:270px;*/}
+.product-list-show .show-pic { /*width: 136px; height: 136px;*/}
+.product-list-show .thumbnail .show-pic img{/* width:136px;*/}
+
+.proListCon .proList li .thumbnail .input-group-sm > .input-group-btn > .btn{ padding:5px;}
+.proListCon .proList li .shopCartBtn .btn{padding: 6px 8px;}
+.fliterPro .fliterList .fliterCarType .firstLabel { max-width: 100px;}
+
+/*****detail page*****/
+.detailContent .proIMG, .detailContent .detailSku{ /*width:290px;*/}
+.detailContent .proBigImage{/*width: 290px;height: 290px;*/}
+.detailContent .proBigImage img{/* width:290px;*/}
+.detailContent .carousel-control.left, 
+.detailContent .carousel-control.right{ font-size:12px; line-height:48px;}
+
+.detailContent .PackageInner .suits ul.recList li{ width:50%;}
+
+.detailContent .rightCon .proPrice dl dt{ width:100%;}
+.detailContent .rightCon .rightBottom .ChangeNumCon  .input-group-sm > .input-group-btn > .btn{ padding: 5px 6px; float:left;}
+.detailContent .rightCon .rightBottom .btnCon button#schedule{padding:6px 8px;}
+
+.detailContent .detailDesCon .tabTitle li{width:59px; font-size:12px;}
+
+/***** generate order *****/
+.generate-order .generate-table .proName a{ width:100px;}
+
+/***** my order *****/
+.myAccountAll .table tbody .centerPlace .imgPlace div{ width:130px;}
+.myAccountAll .table tbody .tr-th td .express{margin-left: 0px;}
+/****** my favorite *****/
+.myAccountAll .favoriteTb thead tr th,
+.myAccountAll .favoriteTb tbody .centerPlace td{ padding:6px;}
+
+/***** shopping cart *****/
+.shopping-cart ul li:first-child{ padding-left:3px;}
+
+/*****  sales volume traders  *****/
+.tradeTb select#brands,
+.salesTb select#brands{ max-width:70px;}
+.tradeTb .proName{ max-width:280px;}
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px;}
+
+
+/**
+右下角菜单
+***/
+.pppcar-toolbar-foolter .item:hover a i{-moz-border-radius: 0;border-radius:0;background-color: #7a6e6e;}
+.pppcar-toolbar-foolter{opacity:0.5;}
+}
+
+@media (min-width: 360px) and (max-width: 479px){
+	/*auction Product*/
+.auction-headline {font-size: 16px;color: #3c3c3b;}
+.auction-price {font-size:14px;color:#be1522;}
+.auction-state-st {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 16px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 330px;}
+#ordinaryInvoice span,#VAT span{height:30px;line-height:30px;text-align: left;}
+/*list page*/
+.fliterPro #carTypeFileId .typeItem .selectInput {width: 328px;}	
+
+.proListCon .proList li .thumbnail{ /*height:290px;*/}
+.product-list-show .show-pic {/* width: 220px; height: 156px;*/}
+.product-list-show .thumbnail .show-pic img{ /*width:156px;*/}
+.fliterPro .fliterList .fliterCarType .firstLabel { max-width: 130px;}
+
+
+/*****detail page*****/
+.detailContent .detailDesCon .tabTitle li{width: 67px;font-size: 14px;}
+.detailContent .rightCon .rightBottom .btnCon button#schedule { padding: 6px 22px;}
+.detailContent .carousel-control.left,
+.detailContent .carousel-control.right {line-height: 56px;}
+
+.detailContent .PackageInner .suits ul.recList li{ width:50%;}
+
+/***** my order *****/
+.myAccountAll .table tbody .centerPlace .imgPlace div{ width:140px;}
+.myAccountAll .table tbody .centerPlace .img-place div{ width:120px;}
+
+/*****  sales volume traders  *****/
+.tradeTb select#brands,
+.salesTb select#brands{ max-width:80px;}
+.tradeTb .proName{ max-width:200px;}
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px;}
+.IndexCarbrand .carousel-control{top: 20px;}
+/**
+右下角菜单
+***/
+.pppcar-toolbar-foolter .item:hover a i{-moz-border-radius: 0;border-radius:0;background-color: #7a6e6e; }
+.pppcar-toolbar-foolter{opacity:0.5;}
+}
+@media (min-width: 375px) and (max-width: 667px){
+	.proListCon .proList li{/* height: 305.5px; */height: auto;}
+}
+@media (min-width: 414px) and (max-width: 736px){
+	.proListCon .proList li{/* height: 330.5px; */height: auto;}
+}
+
+@media (min-width: 480px) and (max-width: 639px){
+	/*auction Product*/
+.auction-headline {font-size: 25px;color: #3c3c3b;}
+.auction-price {font-size:18px;color:#be1522;}
+.auction-state-st {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 400px;}
+	#VAT span{height:30px;line-height:30px;text-align: left;}
+/*list page*/
+.fliterPro #carTypeFileId .typeItem .selectInput {width: 448px;}
+
+.proListCon .proList li{width: 167.5px;/* height: 298.5px; */height: auto;}
+.proListCon .proList li .thumbnail{/* height:350px;*/}
+.product-list-show .show-pic { /*width: 216px; height: 216px;*/}
+.product-list-show .thumbnail .show-pic img{ /*width:216px;*/}
+.fliterPro .fliterList .fliterCarType .firstLabel { max-width: 240px;}
+
+/***** detail page ******/
+.detailContent .carousel-control.left,
+.detailContent .carousel-control.right {line-height: 90px;}
+
+.detailContent .PackageInner .suits ul.recList li{ width:33.33333333%;}
+
+
+/***** generate order *****/
+.generate-order .generate-table .proName a{ width:200px;}
+
+/***** my order *****/
+.myAccountAll .table tbody .centerPlace .imgPlace div{ width:260px;}
+.myAccountAll .table tbody .tr-th td .express{margin-left: 0px;}
+.IndexCarbrand .carousel-control{top: 20px;}
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px;}
+/**
+右下角菜单
+***/
+.pppcar-toolbar-foolter .item:hover a i{-moz-border-radius: 0;border-radius:0;background-color: #7a6e6e; }
+.pppcar-toolbar-foolter{opacity:0.5;}
+}
+
+@media (min-width: 768px) and (max-width:991px) {
+	/*auction Product*/
+.auction-headline {font-size: 25px;color: #3c3c3b;}
+.auction-price {font-size:18px;color:#be1522;}
+.auction-state-st {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 470px;}
+	#VAT span{height:30px;line-height:30px;text-align: right;}
+/*header*/
+header{height:100px;}
+header .logo img{ max-width:200px;}
+header .input-group .form-control{ width:246px;}
+header .headSearch{padding-left: 35px;}
+/*header .headSearch, 
+header .headContact{ margin-top:8px;}*/
+
+/********************/
+/*****index page*****/ 
+/********************/
+
+/*car brand*/
+.all-sort-list .item-1{ height:64px;}
+.all-sort-list .item-1 .cars{ height:64px;padding: 3px 10px;}	
+.all-sort-list .item-1 .cars h4{ margin-bottom:0;}
+.all-sort-list .item-list-1{ left:159px; width:608px; height:332px;}
+.carBrandTopic .item {min-height:145px;}
+.IndexCarbrand{ overflow:hidden;}
+.IndexCarbrand .carousel-control{ top: 20px;bottom: 10px;}
+/*news*/
+.indexNewsCon .tabTitle{ font-size:12px;}
+.indexNewsCon>.nav > li > a{padding: 4px 10px;}
+.indexNewsCon .tab-content{ height:131px;padding: 2px 10px;}
+.indexNewsCon .tab-content ul{ margin-bottom:5px;}
+.indexNewsCon .tab-content ul li{ height:20px; line-height:20px;}
+.all-sort-list .item-list-1{left: 122px;width: 472px;height: 257px;}
+.all-sort-list .item-1 .item-list-1 .subitem-1 ul li {width: 91px;margin-top: 6px;}
+
+/*parts brand*/
+.IndexCarbrand .indexCarBUl li { margin-top: 20px;}
+.IndexCarbrand .indexCarBUl li .indexCarBLi{ height:115px;}
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px;}
+/*.IndexCarbrand .indexCarBUl li .indexCarBLi .indexCarBLiName{top:114px;}
+.IndexCarbrand .indexCarBUl li .indexCarBLi .indexCarBLiName a{ line-height:114px;}*/
+
+.indexAD{ margin-top:10px;}
+
+/*recommend product*/
+.recommendCon { margin-top: 20px;}
+.recommendCon .recUl .recLi{ height:138px;} 
+.recommendCon .recUl .recLi .proDes a{height: 30px;line-height: 15px;}
+.recommendCon .recBrand{ height:278px;}
+
+/*footer*/
+footer{margin-top: 20px;}
+footer dl{padding-left: 38px;min-height: 120px;}
+footer dl dt{padding-bottom: 10px;}
+
+/**************list page**************/
+.spreadGoods ul li{ padding-left:10px; padding-right:10px;}
+.side-show-pic .show-pic, .product-list-show .show-pic{ /* width: 100px;  height: 100px;*/}
+.side-show-pic img{/*max-width: 100px;*/}
+
+.proListCon .proList li .thumbnail{/*height: 260px;*/}
+.product-list-show .show-pic{/* width:132px; height:132px;*/}
+.product-list-show .thumbnail .show-pic img{/*max-width: 132px;*/}
+.product-list-show .thumbnail .input-group .form-control{ width:26px; padding:5px 3px;}
+.product-list-show .thumbnail .input-group .input-group-btn button{ padding:5px;}
+.proListCon .proList li .shopNum { margin-top: 10px;}
+.proListCon .proList li .proListBottom .col-sm-8 { padding-left:9px; padding-right:9px;}
+.proListCon .proList li .proListBottom .shopCartBtn {padding: 9px 2px;}
+.proListCon .proList li .proListBottom .shopCartBtn .btn{padding: 6px 5px;width:100%;}
+.proListCon .proList li .caption{padding-bottom: 0px;}
+.proListCon .proList li .proListBottom .shopCartBtn a{padding: 3px 5px;}
+.proListCon .proList li .shopCartBtn i{ font-size:14px;}
+	
+	
+/*************detail page************/
+.detailContent .carousel-control.left, 
+.detailContent .carousel-control.right {line-height: 50px;font-size: 12px; width:10px;height: auto;}
+
+.detailContent .proBigImage{width:286px; height:286px;}
+.detailContent .proBigImage img{/*max-width:286px;*/}
+
+.detailContent .thumbnailImgCon li {padding-left: 5px; padding-right: 5px;}
+
+.detailContent .rightCon .proPrice{ padding-top:10px; margin: 10px 0;}
+.detailContent .rightCon .proPrice dl{ margin-bottom:10px;}
+.detailContent .rightCon .proPrice dl dd{ font-size:12px;}
+.detailContent .rightCon .dl-horizontal{ margin-bottom:10px;}
+.detailContent .rightCon .dl-horizontal dt,
+.detailContent .rightCon .dl-horizontal dd{ margin-top:5px;}
+
+.detailContent .rightCon .chooseModel dt{ margin-top:10px;}
+.detailContent .rightCon .chooseModel dd span{ margin-top:0;}
+
+.PackageInner .recPerPro{ width:80px; margin-right:8px;}
+.PackageInner .recPerPro .p-img a {width: 80px; height: 80px;}
+.PackageInner .recPerPro .p-img a img{ max-width:80px; height:auto;}
+.PackageInner i{ width:20px; height:20px; background-size:100%; margin-top:34px;}
+.PackageInner i.recpro-equal{ background-size:100%; background-position:0 -28px;}
+.PackageInner .suits ul.recList li { width: 122px;}
+.PackageInner .infos div {padding-left: 22px;}
+.PackageInner .infos .p-price{ margin-top:0;}
+	
+/***** login page *****/
+.login-jumbotron .login-div { padding-bottom:0;}
+.login-jumbotron .valideCode { padding-left:0;}
+
+/******************** my account ********************/
+
+/***** address manage *****/
+.myAccount .myAccountNav {padding-left:20px;}
+
+/****** my favorite *****/
+.myAccountAll .table tbody .centerPlace .divide img{ height:auto;}	
+.myAccountAll .table tbody .tr-th td .express{margin-left: 0px;}
+
+/**
+右下角菜单
+***/
+.pppcar-toolbar-foolter .item:hover a i{-moz-border-radius: 0;border-radius:0;background-color: #7a6e6e;}
+.pppcar-toolbar-foolter{opacity:0.5;}
+}
+
+/*tablet horizontal*/
+@media (min-width: 992px) and (max-width:1199px) {
+	/*auction Product*/
+.auction-headline {font-size: 25px;color: #3c3c3b;}
+.auction-price {font-size:18px;color:#be1522;}
+.auction-state-st {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 470px;}
+	#VAT span{height:30px;line-height:30px;text-align: right;}
+	
+.headSearch input.form-control{width: 380px;}
+/********************/
+/*****index page*****/ 
+/********************/
+
+/*car brand*/
+.all-sort-list .item-1{ height:83px;}
+.all-sort-list .item-1 .cars{ height:83px;}	
+.all-sort-list .item-list-1{ left:159px; width:608px; height:332px;}
+
+.carBrandTopic .item {min-height:181px;}
+
+/*parts brand*/
+.indexNewsCon .tab-content{ height:163px;}
+.indexNewsCon .tab-content ul li{ height:22px; line-height:22px;}
+.IndexCarbrand .carousel-control{top: 20px;}
+.IndexCarbrand .indexCarBUl li .indexCarBLi{ height:153px;}
+/*.IndexCarbrand .indexCarBUl li .indexCarBLi .indexCarBLiName{ top:152px;}
+.IndexCarbrand .indexCarBUl li .indexCarBLi .indexCarBLiName a{ line-height:152px;}*/
+.IndexCarbrand .indexCarBUl li{ margin-top:20px;}
+.IndexCarbrand .indexCarBUl li.under-mobile{margin-top: 10px;}
+.IndexCarbrand .indexCarBUl{margin-top: 0px;}
+.indexAD{ margin-top:10px;}
+
+/*recommend product*/
+.recommendCon { margin-top:20px;}
+.recommendCon .recUl .recLi{ height:178px;}
+.recommendCon .recBrand{ height:358px;}
+
+/*footer*/
+footer{ margin-top:20px;}
+footer dl{ padding-left:70px;}
+
+/**************list page**************/
+.side-show-pic .show-pic, .product-list-show .show-pic{ /* width: 130px;  height: 130px;*/}
+.side-show-pic img{/*max-width: 126px;*/}
+
+.proListCon .proList li .thumbnail{ /*height: 316px;*/}
+.product-list-show .show-pic{/* width:180px; height:180px;*/}
+.product-list-show .thumbnail .show-pic img{/*max-width: 178px;*/}
+.product-list-show .thumbnail .input-group .form-control{ width:40px;}
+.product-list-show .thumbnail .input-group .input-group-btn button{ padding:5px;}
+.proListCon .proList li .proListBottom .col-md-7 { padding-left:10px; padding-right:10px;}
+
+/*************detail page************/
+.detailContent .carousel-control.left, .detailContent .carousel-control.right {line-height: 65px;}
+.detailContent .proBigImage{width:368px; height:368px;}
+.detailContent .proBigImage img{/*max-width: 368px;*/}
+
+.PackageInner .recPerPro{ width:100px; margin-right:15px;}
+.PackageInner .recPerPro .p-img a {width: 100px; height: 100px;}
+.PackageInner .recPerPro .p-img a img{ max-width:100px; height:auto;}
+
+/***** login page *****/
+.login-jumbotron .login-well{padding: 10px 24px 0;}
+.login-jumbotron .valideCode{ padding-left:0;}
+
+/****** my favorite *****/
+.myAccountAll .row .col-lg-1.selectAll { margin-left: 9px;}
+
+
+}
+
+/*pc*/
+@media (min-width: 1200px) {
+	/*auction Product*/
+.auction-headline {font-size: 25px;color: #3c3c3b;}
+.auction-price {font-size:18px;color:#be1522;}
+.auction-state-st {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-end {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+.auction-state-nt {float:right;font-size: 22px;color:#fff;font-weight:normal;}
+	
+	.baiduMap{height: 240px;width: 470px;}
+	#VAT span{height:30px;line-height:30px;text-align: right;}
+.carBrandTopic .item {min-height:214px;}
+.IndexCarbrand .indexCarBUl li.under-pc{margin-top: 10px;}
+}
