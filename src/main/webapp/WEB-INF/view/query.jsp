@@ -352,7 +352,6 @@ $(function(){
 					,"#startTime","#endTime");
 		});
 	 });
-	
 
 </script>
 </body>
