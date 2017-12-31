@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
     <link href="${pageContext.request.contextPath}/aliyunoss/css/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
@@ -65,15 +63,11 @@
                           </label>
                         </div>
                   </div>
-			     
-
                   <div class="col-sm-3" style="width: 200px">
                         <div class="dataTables_length" >
                             <label><span style="font-weight:bold;">销售员&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <select name="order-status" id="order-status" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
-                                    <option value="">请选择销售员</option>
-                                    <option value="ORDER_SAVED">张三</option>
-                                  
+                                <select name="salesman" id="salesman" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                    <option value="none">请选择销售员</option>
                                 </select>
                             </label>
                         </div>
@@ -81,7 +75,7 @@
                   <div class="col-sm-3" style="width: 200px">
                         <div class="dataTables_length" >
                             <label><span style="font-weight:bold;">品类&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <select name="order-status" id="order-status" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
+                                <select name="classification" id="classification" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
                                     <option value="">请选择品类</option>
                                     <option value="ORDER_SAVED">排气系统</option>
                                    
@@ -89,29 +83,25 @@
                             </label>
                         </div>
                   </div>
-                  
-                  
                 </div>
                 <div class="col-sm-12">
                   
                       <div class="form-group">
                         <label  class="col-sm-3 control-label" style="text-align: right;margin-top:8px;margin-right:-15px;padding-left: 0px;;width:72px">订单日期</label>
                         <div class="col-sm-9" style="width: 15%;">
-                          <input type="date" class="form-control" id="orderTime"/>
+                          <input type="date" class="form-control" id="startTime"/>
                         </div>
                         <label  class="col-sm-3 control-label" style="text-align: right;margin-top:8px;margin-right:-15px;padding-left: 0px;;width:30px">至</label>
                         <div class="col-sm-9" style="width: 15%">
-                          <input type="date" class="form-control" id="orderTime"/>
+                          <input type="date" class="form-control" id="endTime"/>
                         </div>  
                   </div>
-                </div>
-                <div class="col-sm-12" style="margin-top: 15px">
-                  
-                  <div class="btn-group" role="group" aria-label="..." style="float:left">
-                              <button onclick="javascript:window.location.reload()" type="button" class="btn btn-primary">
-                                  查询
-                              </button>
-                  </div>
+                  	<div class="btn-group" role="group" aria-label="..." style="float: left">
+							<!-- 在这里添加了id  用于js提交 -->
+							<button id = "submit" type="button" class="btn btn-primary">查询</button>
+							<button type="button" id="download" style="margin-left:50px" id="btn_download" 
+							class="btn btn-primary" onClick ="$('#_tab').tableExport({ type: 'excel', escape: 'false' })">导出excel</button>
+						</div>
                 </div>
             </div>
         </div>
@@ -120,13 +110,14 @@
         <table id="_tab" class="table table-bordered table-hover">
             <thead>
             <tr>
+            	<th>订单id</th>
                 <th>省</th>
                 <th>市</th>
                 <th>销售员</th>
                 <th>品类</th>
                 <th>数量</th>
                 <th>金额</th>
-               
+                <th>订单创建日期</th>
             </tr>
             </thead>
             <tbody>
@@ -156,6 +147,44 @@
 <script src="${pageContext.request.contextPath}/AdminLTE/plugins/fastclick/fastclick.js"></script>
 <script>
 $(function(){
+	//加载销售员的信息
+	$.ajax({
+	      type: 'GET',
+	      url: '${pageContext.request.contextPath}/getSalesmans',
+	      contentType:'application/json;charset=UTF-8',
+	       success: function (response) {
+	    	   //遍历返回数据,并把里面的数据追加到option选项中
+	    	    var salesman = document.getElementById("salesman");
+	    	    for (var i=0; i<response.length; i++) {
+	    			   if(response[i]!=null){
+	    				   var option = document.createElement("option");
+	    				   option.value = response[i].salesmanId;
+	    				  
+	    				   option.innerHTML = response[i].salesman;
+	    				   salesman.appendChild(option);
+	    			   }
+	    	    	}
+				}
+			});
+	
+	
+	
+	//加载品类的信息
+ 	$.ajax({
+	      type: 'GET',
+	      url: '${pageContext.request.contextPath}/getClassifications',
+	      contentType:'application/json;charset=UTF-8',
+	       success: function (response) {
+	    	   //遍历返回数据,并把里面的数据追加到option选项中
+	    	    var classification = document.getElementById("classification");
+	           for (var i=0; i<response.length; i++) {
+	               var option = document.createElement("option");
+	               option.value = response[i].classificationId;
+	               option.innerHTML = response[i].className;
+	               classification.appendChild(option);
+	           }
+				}
+			}); 
 	//加载省数据
 	$.ajax({
 	      type: 'GET',
@@ -183,12 +212,7 @@ $(function(){
 	      url: '${pageContext.request.contextPath}/getCities?proid='+this.value,
 	      contentType:'application/json;charset=UTF-8',
 	       success: function (response) {
-	    	   //遍历省市数据,并把里面省的数据追加到option选项中
-	     /*        for (var i=0; i<response.length; i++) {
-	          if (proid == response[i].cityId) {
-	              cities = response[i].city;
-	          }
-	      } */
+	    	
 	      //获得市级下拉框对象
 	      var city = document.getElementById("city");
 	      //每次点击省级后,市级初始化,避免高级重复追加
@@ -206,25 +230,17 @@ $(function(){
 	    }
 });
 
-	//当你需要多条件查询，你可以调用此方法，动态修改参数传给服务器
-	window.reloadTable = function(oTable,states,orderNo) {
-		var states = $(states).val();
-		var orderNo = $(orderNo).val();
-		var param = {
-			"orderState" : states,
-			"orderNo"  : orderNo
-		};
-		oTable.settings()[0].ajax.data = param;
-		oTable.ajax.reload();
-	}
+
 	
 	var _tab;
+	
 	$(function () {
 		//初始化表格
 		var No=0;
 		_tab = $('#_tab').DataTable( {
 	        "paging": true,
 	        "lengthChange": false,
+	        "iDisplayLength":20,
 	        "searching": false,
 	        "ordering": false,
 	        "info": true,
@@ -233,9 +249,10 @@ $(function(){
 	        "bInfo":false,
 	        "serverSide":true,   //启用服务器端分页
 	        "language":{"url":"${pageContext.request.contextPath}/AdminLTE/plugins/datatables/language.json"},
-	        "ajax":{"url":"${pageContext.request.contextPath}/query","type":"post"},
+	        "ajax":{"url":"${pageContext.request.contextPath}/toQuery","type":"post"},
 	        "columns": [
-	            /* { "data":"id" }, */
+	            { "data":null },
+	            { "data":null },
 	            { "data":null },
 	            { "data":null },
 	            { "data":null },
@@ -244,96 +261,100 @@ $(function(){
 	            { "data":null }
 	        ],
 	        "columnDefs": [
-				{
-				    targets: 0,
-				    data: null,
-				    render: function (data) {
-				    	
-	                    var btn = "";
-	                    if(data.customerId!=""&&data.customerId!=null){
-	                    	btn = "<font style='font-size : 14px'>"+data.insideOrderNo+"</font>";           	
-	                    }
-				        return data;
-				    }
-				},
-				{
-				    targets: 1,
-				    data: null,
-				    render: function (data) {
-				    	
-	                    var btn = "";
-	                    if(data.insideOrderNo!=""&&data.insideOrderNo!=null){
-	                    	btn = "<font style='font-size : 14px'>"+data.customerId+"</font>";           	
-	                    }
-				        return data;
-				    }
-				},
-				{
-				    targets: 2,
-				    data: null,
-				    render: function (data) {
-				    	
-	                    var btn = "";
-	                    if(data.skuOptDescipiton!=""&&data.skuOptDescipiton!=null){
-	                    	btn = "<font style='font-size : 12px'>商品名称："+data.goodsName+"<br/>"+data.skuOptDescipiton +"</font>";           	
-	                    }
-				        return data;
-				    }
-				},
-				{
-				    targets: 4,
-				    data: null,
-				    render: function (data) {
-				    	
-	                    var btn = "";
-	                    if(data.payState!=""&&data.payState!=null){
-	                    	if(data.payState == "15"){
-	                    		btn ='<font style="font-size : 12px">支付失败</font></br>';
-	                    	}else if(data.payState == "20"){
-	                    		btn ='<font style="font-size : 12px">支付成功</font></br>';
-	                    	}else if(data.payState == "22"){
-	                    		btn ='<font style="font-size : 12px">部分还款</font></br>';
-	                    	}else if(data.payState == "23"){
-	                    		btn ='<font style="font-size : 12px">确认支付</font></br>';
-	                    	}else if(data.payState == "25"){
-	                    		btn ='<font style="font-size : 12px">结清</font></br>';
-	                    	}else if(data.payState == "30"){
-	                    		btn ='<font style="font-size : 12px">支付取消</font></br>';
-	                    	}else if(data.payState == "35"){
-	                    		btn ='<font style="font-size : 12px">退货</font></br>';
-	                    	}else if(data.payState == "110"){
-	                    		btn ='<font style="font-size : 12px">支付失败(超流量阀)</font></br>';
-	                    	}else{
-	                    		btn ='<font style="font-size : 12px">'+data.payState+'</font></br>';
-	                    	}
-	                    	
-	                    }
-				        return data;
-				    }
-				},
-				{
-				    targets: 5,
-				    data: null,
-				    render: function (data) {
-				    	
-	                    var btn = "";
-	                    if(data.fOrderID!=""&&data.fOrderID!=null){
-	                    	btn = "<font style='font-size : 14px'>"+data.fOrderID+"</font>";           	
-	                    }
-// 				        return btn;
-						return data;
-				    }
-				}  ]
+							{
+								targets : 0,
+								data : null,
+								render : function(data) {
+
+									return data.id;
+								}
+							},
+							{
+								targets : 1,
+								data : null,
+								render : function(data) {
+
+									return data.province;
+								}
+							},
+							{
+								targets : 2,
+								data : null,
+								render : function(data) {
+
+									return data.city;
+								}
+							},
+							{
+								targets : 3,
+								data : null,
+								render : function(data) {
+
+									return data.salesman;
+								}
+							}
+							,
+							{
+								targets : 4,
+								data : null,
+								render : function(data) {
+
+									return data.classification;
+								}
+							},
+							{
+								targets : 5,
+								data : null,
+								render : function(data) {
+									return data.number;
+								}
+							},
+							{
+								targets : 6,
+								data : null,
+								render : function(data) {
+									return data.price;
+								}
+							},
+							{
+								targets : 7,
+								data : null,
+								render : function(data) {
+									return data.createTime;
+								}
+							} ]
 	    } ).on('preXhr.dt',function(e,settings,data) {
 			No=0;
 	    } );
+		//当你需要多条件查询，你可以调用此方法，动态修改参数传给服务器 ,
+		window.reloadTable = function(oTable,province,city,salesman,classification,startTime,endTime) {
+			var provinceId = $(province).val();
+			var cityId = $(city).val();
+			var salesmanId = $(salesman).val();
+			var classificationId = $(classification).val();
+			var startTime = $(startTime).val();
+			var endTime = $(endTime).val();
+			var param = {
+				"provinceId" : provinceId,
+				"cityId"  : cityId,
+				"salesmanId"  : salesmanId,
+				"classificationId"  : classificationId,
+				"startTime"  : startTime,
+				"endTime"  : endTime
+			};
+			oTable.settings()[0].ajax.data = param;
+			oTable.ajax.reload();
+		}
+		
+		/* 要在_tab下面使用js提交  因为_tab就是用来渲染数据表格的  "#province"传递到后台的是id, */
+		$("#submit").click(function() {
+			window.reloadTable(_tab, "#province","#city", "#salesman","#classification"
+					,"#startTime","#endTime");
+		});
 	 });
 	
 
 </script>
-
-
-
 </body>
 </html>
 

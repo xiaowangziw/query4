@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pppcar.dao.QueryDao">
+
+    <select id="queryCount" resultType="Integer" >
+	 select  COUNT(o.id)
+		from bs_order_list l 
+		left join bs_order o on o.id = l.order_id
+		left join bs_tenant_visualize v on o.tenant_id = v.tenant_id
+		left join pca_areas a on a.area_id = v.area_id
+		left join pca_cities c on c.city_id = a.city_id
+		left join pca_provinces p on p.province_id = c.province_id
+		left join bs_class_product cp on cp.product_id = l.product_id
+		left join bs_classification cf on cf.id = cp.classification_id
+		left join (
+		select cf.parent_id as parent_id,cf.class_name as class_name
+		from bs_order o
+		left join bs_order_list l on o.id = l.order_id
+		left join bs_class_product cp on cp.product_id = l.product_id
+		left join bs_classification cf on cf.id = cp.classification_id) al
+		on al.parent_id = cf.id
+        <where>
+            <if test="provinceId != null and provinceId !=''">
+                p.province_id =  #{provinceId}
+            </if>
+             <if test="cityId != null and cityId !=''">
+               and c.city_id = #{cityId}
+            </if>
+             <if test="salesmanId != null and salesmanId !=''">
+               and o.salesman_id = #{salesmanId}
+            </if>
+            <if test="classificationId != null and classificationId !=''">
+              and  cf.id=#{classificationId}
+            </if>
+            <if test="startTime != null and startTime !=''">
+              and  o.create_time &gt;=#{startTime,jdbcType=DATE}
+            </if>
+             <if test="endTime != null and endTime !=''">
+              and  o.create_time  &lt;=#{endTime,jdbcType=DATE}
+            </if>
+        </where>
+        <!-- order by l.number desc,l.discount_total_price desc; -->
+
+    </select>
+    
+    <select id="getAllSalesman" resultType="Order" >
+    	select distinct salesman_id as salesmanId,salesman from bs_order 
+    </select>
+    	
+    <select id="queryOrderDetails" resultType="Order" >
+	select  o.id as id ,l.id as orderListId,l.product_id as product_id ,l.number number,(l.retail_price * l.number - l.discount_total_price) as price, p.province as province ,
+	c.city as city ,cf.parent_id as classificationId,o.salesman as salesman,o.create_time as createTime
+	from bs_order_list l
+		left join bs_order o on o.id = l.order_id
+		left join bs_tenant_visualize v on o.tenant_id = v.tenant_id
+		left join pca_areas a on a.area_id = v.area_id
+		left join pca_cities c on c.city_id = a.city_id
+		left join pca_provinces p on p.province_id = c.province_id
+		left join bs_class_product cp on cp.product_id = l.product_id
+		left join bs_classification cf on cf.id = cp.classification_id
+		left join (
+		select o.id as oid ,l.product_id as pid ,cf.id as cf_id
+			from bs_order_list l
+			left join  bs_order o on o.id = l.order_id
+			left join bs_class_product cp on cp.product_id = l.product_id
+			left join bs_classification cf on cf.id = cp.classification_id) al
+			on al.cf_id = cf.parent_id
+        <where>
+            <if test="provinceId != null and provinceId !=''">
+                p.province_id =  #{provinceId}
+            </if>
+             <if test="cityId != null and cityId !=''">
+               and c.city_id = #{cityId}
+            </if>
+             <if test="salesmanId != null and salesmanId !=''">
+               and o.salesman_id = #{salesmanId}
+            </if>
+            <if test="classificationId != null and classificationId !=''">
+              and  cf.id=#{classificationId}
+            </if>
+            <if test="startTime != null and startTime !=''">
+              and  o.create_time &gt;= #{startTime,jdbcType=DATE}
+            </if>
+             <if test="endTime != null and endTime !=''">
+              and  o.create_time  &lt;= #{endTime,jdbcType=DATE}
+            </if>
+        </where>
+        order by l.number desc,l.discount_total_price desc
+        LIMIT ${start},${pageSize};
+
+    </select>
+    
+    <select id="getParentidByClassificationId" resultType="Classification" >
+    	select a.parent_id as classificationId, c.class_name as className from bs_classification c ,
+		(select parent_id from bs_classification where id = #{classificationId})a
+		where c.id = a.parent_id
+    </select>
+
+
+
+</mapper>
