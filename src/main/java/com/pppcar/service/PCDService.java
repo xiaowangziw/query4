@@ -7,8 +7,8 @@ import com.pppcar.pojo.Province;
 
 public interface PCDService {
 
-	List<Province> getAllProvince();
+	public List<Province> getAllProvince();
 
-	List<City> getAllCityByProvinceId(Integer provinceId);
+	public List<City> getAllCityByProvinceId(Integer provinceId);
 
 }

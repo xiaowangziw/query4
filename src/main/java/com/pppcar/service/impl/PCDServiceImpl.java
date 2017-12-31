@@ -16,13 +16,11 @@ public class PCDServiceImpl implements PCDService {
 	@Autowired
 	PCDDao pcdDao;
 
-	@Override
 	public List<Province> getAllProvince() {
 		List<Province> allProvince = pcdDao.getAllProvince();
 		return allProvince;
 	}
 
-	@Override
 	public List<City> getAllCityByProvinceId(Integer provinceId) {
 
 		return pcdDao.getALLByProvinceId(provinceId);
