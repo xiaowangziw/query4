@@ -1,8 +1,10 @@
 package com.pppcar.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pppcar.pojo.Order;
+import com.pppcar.pojo.OrderDetailSearchArgs;
 import com.pppcar.pojo.Page;
 import com.pppcar.pojo.Province;
 
@@ -20,8 +22,8 @@ public interface QueryService {
 	 * @param endTime
 	 * @return
 	 */
-	Page<Order> queryOrderDetails(Integer start,Integer pageSize,String provinceId,String cityId,String salesmanId,String classificationId,String startTime,String endTime);
-//	Page<Order> queryOrderDetails(Integer start,Integer pageSize,OrderDetailSearchArgs orderDetailSearchArgs);
+//	Page<Order> queryOrderDetails(Integer start,Integer pageSize,String provinceId,String cityId,String salesmanId,String classificationId,String startTime,String endTime);
+	Page<Order> queryOrderDetails(Integer start,Integer pageSize,HashMap<String, Object> orderDetailSearchArgs);
 
 	/**
 	 * 获取订单表中所有销售员的信息

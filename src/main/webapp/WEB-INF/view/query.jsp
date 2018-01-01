@@ -49,7 +49,7 @@
                         <div class="dataTables_length" >
                         <label><span style="font-weight:bold;">省&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <select id="province" name="province" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
-                                   	<option value="none">--请选择省--</option>
+                                   	<option value="">--请选择省--</option>
                                 </select>
                           </label>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="dataTables_length" >
                          <label><span style="font-weight:bold;">市&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                  <select id="city" name="city" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
-                                    <option value="none">--请选择市--</option>
+                                    <option value="">--请选择市--</option>
                                 </select>
                           </label>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="dataTables_length" >
                             <label><span style="font-weight:bold;">销售员&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <select name="salesman" id="salesman" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
-                                    <option value="none">请选择销售员</option>
+                                    <option value="">请选择销售员</option>
                                 </select>
                             </label>
                         </div>
@@ -99,8 +99,11 @@
                   	<div class="btn-group" role="group" aria-label="..." style="float: left">
 							<!-- 在这里添加了id  用于js提交 -->
 							<button id = "submit" type="button" class="btn btn-primary">查询</button>
-							<button type="button" id="download" style="margin-left:50px" id="btn_download" 
-							class="btn btn-primary" onClick ="$('#_tab').tableExport({ type: 'excel', escape: 'false' })">导出excel</button>
+							<button id = "reset" onClick ="resetParam()" type="button" class="btn btn-primary">重置</button>
+							<!-- <button type="button" style="margin-left:50px" id="btn_download" 
+							class="btn btn-primary" onClick ="exportExcel()">导出excel</button> -->
+							<button type="button" style="margin-left:50px" id="btn_download" class="btn btn-primary" 
+							onClick ="$('#_tab').tableExport({ type: 'excel', escape: 'false' })">导出excel</button>
 						</div>
                 </div>
             </div>
@@ -159,7 +162,6 @@ $(function(){
 	    			   if(response[i]!=null){
 	    				   var option = document.createElement("option");
 	    				   option.value = response[i].salesmanId;
-	    				  
 	    				   option.innerHTML = response[i].salesman;
 	    				   salesman.appendChild(option);
 	    			   }
@@ -216,7 +218,7 @@ $(function(){
 	      //获得市级下拉框对象
 	      var city = document.getElementById("city");
 	      //每次点击省级后,市级初始化,避免高级重复追加
-	      city.innerHTML = "<option value='none'>--请选择市--</option>";
+	      city.innerHTML = "<option value=''>--请选择市--</option>";
 	      //遍历市级数据,并取出市级数据,追加到市级对象中
 	      for (var i=0; i<response.length; i++) {
 	          var option = document.createElement("option");
@@ -342,15 +344,26 @@ $(function(){
 				"startTime"  : startTime,
 				"endTime"  : endTime
 			};
-			oTable.settings()[0].ajax.data = param;
+		/* -------------------------------------------------------------------------------------  */
+			var paramTo = {
+		//这是将json对象转成json字符串传递到后台,要不然后台拿不到
+				"param" : JSON.stringify(param)
+			};
+			//oTable.settings()[0].ajax.data = param;
+			oTable.settings()[0].ajax.data = paramTo;
+		/* -------------------------------------------------------------------------------------  */
 			oTable.ajax.reload();
 		}
 		
 		/* 要在_tab下面使用js提交  因为_tab就是用来渲染数据表格的  "#province"传递到后台的是id, */
 		$("#submit").click(function() {
-			window.reloadTable(_tab, "#province","#city", "#salesman","#classification"
-					,"#startTime","#endTime");
+			window.reloadTable(_tab, "#province","#city", "#salesman","#classification","#startTime","#endTime");
 		});
+		
+		/* 导出数据*/
+		function exportExcel(){
+			
+		}
 	 });
 
 </script>

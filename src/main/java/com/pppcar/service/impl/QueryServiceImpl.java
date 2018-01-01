@@ -1,5 +1,6 @@
 package com.pppcar.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -23,16 +24,24 @@ public class QueryServiceImpl implements QueryService {
 	@Autowired
 	QueryDao queryDao;
 
-	public Page<Order> queryOrderDetails(Integer start,Integer pageSize, String provinceId,String cityId,String salesmanId,String classificationId,String startTime,String endTime) {
+	public Page<Order> queryOrderDetails(Integer start,Integer pageSize, HashMap<String, Object> orderDetailSearchArgs) {
+//		public Page<Order> queryOrderDetails(Integer start,Integer pageSize, String provinceId,String cityId,String salesmanId,String classificationId,String startTime,String endTime) {
 		
 		if(start == null ){
     		start = 0;
+    		
     	}
     	if(pageSize == null){
     		pageSize = 20;
     	}
-    	  int orderCount = queryDao.queryCount(provinceId, cityId, salesmanId, classificationId, startTime, endTime);
-          List<Order> orderList = queryDao.queryOrderDetails(start,pageSize,provinceId, cityId, salesmanId, classificationId,startTime,endTime);
+    	
+    	int orderCount = queryDao.queryCount(orderDetailSearchArgs);
+    	
+    	orderDetailSearchArgs.put("start", start);
+    	orderDetailSearchArgs.put("pageSize", pageSize);
+          List<Order> orderList = queryDao.queryOrderDetails(orderDetailSearchArgs);
+//          int orderCount = queryDao.queryCount(provinceId, cityId, salesmanId, classificationId, startTime, endTime);
+//          List<Order> orderList = queryDao.queryOrderDetails(start,pageSize,provinceId, cityId, salesmanId, classificationId,startTime,endTime);
           //根据查出来的二级品类id classificationId 查处对应的一级品类id和名称
           for (Order order : orderList) {
         	 Integer classificationId2 = order.getClassificationId();
