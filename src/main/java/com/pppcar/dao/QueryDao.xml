@@ -99,12 +99,30 @@
             <if test="classificationId != null and classificationId !=''">
               and al.classification_id=#{classificationId,jdbcType=INTEGER}
             </if>
-            <if test="startTime != null and startTime !=''">
-              and  o.create_time&gt;= #{startTime,jdbcType=DATE}
-            </if>
-             <if test="endTime != null and endTime !=''">
-              and o.create_time&lt;= #{endTime,jdbcType=DATE}
-            </if>
+            
+            
+<!--             <if test="startTime != null and startTime !=''"> -->
+<!--               and  o.create_time&gt;= #{startTime,jdbcType=DATE} -->
+<!--             </if> -->
+            
+            
+            
+<!--              <if test="endTime != null and endTime !=''"> -->
+<!--               and o.create_time&lt;= #{endTime,jdbcType=DATE} -->
+<!--             </if> -->
+            
+            
+            
+            <if test="startTime !=null  and startTime !=''">
+				and o.create_time>=#{startTime,jdbcType=TIMESTAMP}
+			</if>
+
+			<if test="endTime !=null  and endTime !=''">
+				and o.create_time  <![CDATA[ <= ]]>#{endTime,jdbcType=TIMESTAMP}
+			</if>
+            
+            
+            
             </where>
               )result
 	       GROUP BY  result.salesman_id,result.province_id,result.city_id,result.classification_id
