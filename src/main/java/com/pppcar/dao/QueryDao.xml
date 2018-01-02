@@ -33,9 +33,9 @@
 		LEFT JOIN bs_classification tb4 ON tb3.id = tb4.parent_id
 		LEFT JOIN bs_class_product cp ON cp.classification_id = tb4.id
 				)al ON al.product_id = l.product_id
-		<where>
+		where o.salesman_id is not null
             <if test="provinceId != null and provinceId !=''">
-                p.province_id =#{provinceId,jdbcType=INTEGER}
+                and p.province_id =#{provinceId,jdbcType=INTEGER}
             </if>
              <if test="cityId != null and cityId !=''">
                and c.city_id = #{cityId,jdbcType=INTEGER}
@@ -52,7 +52,7 @@
              <if test="endTime != null and endTime !=''">
               and  o.create_time&lt;=#{endTime,jdbcType=DATE}
             </if>
-           </where>
+          
            )result
            GROUP BY  result.salesman_id,result.province_id,result.city_id,result.classification_id
            )a
@@ -86,7 +86,7 @@
 			LEFT JOIN bs_classification tb4 ON tb3.id = tb4.parent_id
 			LEFT JOIN bs_class_product cp ON cp.classification_id = tb4.id
 					)al ON al.product_id = l.product_id
-			<where>
+			where o.salesman_id is not null
             <if test="provinceId != null and provinceId !=''">
                and p.province_id = #{provinceId,jdbcType=INTEGER}
             </if>
@@ -100,19 +100,6 @@
               and al.classification_id=#{classificationId,jdbcType=INTEGER}
             </if>
             
-            
-<!--             <if test="startTime != null and startTime !=''"> -->
-<!--               and  o.create_time&gt;= #{startTime,jdbcType=DATE} -->
-<!--             </if> -->
-            
-            
-            
-<!--              <if test="endTime != null and endTime !=''"> -->
-<!--               and o.create_time&lt;= #{endTime,jdbcType=DATE} -->
-<!--             </if> -->
-            
-            
-            
             <if test="startTime !=null  and startTime !=''">
 				and o.create_time>=#{startTime,jdbcType=TIMESTAMP}
 			</if>
@@ -120,10 +107,6 @@
 			<if test="endTime !=null  and endTime !=''">
 				and o.create_time  <![CDATA[ <= ]]>#{endTime,jdbcType=TIMESTAMP}
 			</if>
-            
-            
-            
-            </where>
               )result
 	       GROUP BY  result.salesman_id,result.province_id,result.city_id,result.classification_id
 		ORDER BY number DESC,price DESC
@@ -132,7 +115,7 @@
     
     
     <select id="getAllSalesman" resultType="Order"  >
-    	select distinct salesman_id as salesmanId,salesman from bs_order 
+    	select distinct salesman_id as salesmanId,salesman from bs_order where salesman_id is not null
     </select>
     <select id="getParentidByClassificationId" resultType="Classification" >
     	select a.parent_id as classificationId, c.class_name as className from bs_classification c ,

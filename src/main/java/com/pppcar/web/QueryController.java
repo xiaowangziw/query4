@@ -1,16 +1,11 @@
 package com.pppcar.web;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,16 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.pppcar.pojo.Order;
 import com.pppcar.pojo.Page;
 import com.pppcar.pojo.PageBean;
@@ -144,8 +137,7 @@ public class QueryController {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
 		// 如果第一次加载直接返回
-		if (object == null || (object.getString("endTime") == null || object.getString("endTime").equals(""))
-				&& (object.getString("startTime") == null || object.getString("startTime").equals(""))) {
+		if (object == null) {
 			// 默认查询三个月的数据
 			LocalDate now = LocalDate.now();
 			hashMap.put("endTime", Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -159,7 +151,17 @@ public class QueryController {
 		hashMap.put("classificationId", object.getString("classificationId"));
 		hashMap.put("endTime", object.getString("endTime"));
 		hashMap.put("startTime", object.getString("startTime"));
-		
+
+		if (object.getString("startTime") == null || object.getString("startTime") == "") {
+			LocalDate now = LocalDate.now();
+			LocalDate minusMonths = now.minusMonths(3);
+			hashMap.put("startTime", Date.from(minusMonths.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		}
+		if (object.getString("endTime") == null || object.getString("endTime") == "") {
+			LocalDate now = LocalDate.now();
+			hashMap.put("endTime", Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		}
+
 		return hashMap;
 	}
 
