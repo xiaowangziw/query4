@@ -22,7 +22,6 @@ public interface QueryService {
 	 * @param endTime
 	 * @return
 	 */
-//	Page<Order> queryOrderDetails(Integer start,Integer pageSize,String provinceId,String cityId,String salesmanId,String classificationId,String startTime,String endTime);
 	Page<Order> queryOrderDetails(Integer start,Integer pageSize,HashMap<String, Object> orderDetailSearchArgs);
 
 	/**
@@ -36,5 +35,13 @@ public interface QueryService {
 	 * @return
 	 */
 	List<Order> getAllClassifications();
+	
+	/**
+	 * 下载数据
+	 * 
+	 * @param paramMap
+	 * @return
+	 */
+	List<Order> queryAndDownload(HashMap<String, Object> paramMap);
 
 }

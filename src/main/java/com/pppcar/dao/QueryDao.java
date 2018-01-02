@@ -28,15 +28,16 @@ List<Order> queryOrderDetails(HashMap<String, Object> orderDetailSearchArgs);
 	 * @return
 	 */
 	int queryCount(HashMap<String, Object> orderDetailSearchArgs);
-//	int queryCount(@Param("provinceId")String provinceId,@Param("cityId")String cityId,@Param("salesmanId")String salesmanId,
-//			@Param("classificationId")String classificationId,@Param("startTime")String startTime,@Param("endTime")String endTime);
-
 	/**
 	 * 获取订单表中所有销售员信息
 	 * @return
 	 */
 	List<Order> getAllSalesman();
 
+	/**
+	 * 获取订单表中所有品类信息
+	 * @return
+	 */
 	List<Order> getAllClassifications();
 
 	/**

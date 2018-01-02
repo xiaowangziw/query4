@@ -4,22 +4,35 @@
 <mapper namespace="com.pppcar.dao.QueryDao">
 
    <select id="queryCount" resultType="Integer" parameterType="HashMap">
-    select  COUNT(l.id)
-		from bs_order_list l 
-		left join bs_order o on o.id = l.order_id
-		left join bs_tenant_visualize v on o.tenant_id = v.tenant_id
-		left join pca_areas a on a.area_id = v.area_id
-		left join pca_cities c on c.city_id = a.city_id
-		left join pca_provinces p on p.province_id = c.province_id
-		left join bs_class_product cp on cp.product_id = l.product_id
-		left join bs_classification cf on cf.id = cp.classification_id
-		left join (
-		select cf.parent_id as parent_id,cf.class_name as class_name
-		from bs_order o
-		left join bs_order_list l on o.id = l.order_id
-		left join bs_class_product cp on cp.product_id = l.product_id
-		left join bs_classification cf on cf.id = cp.classification_id) al
-		on al.parent_id = cf.id
+		SELECT COUNT(*)
+		FROM
+		(
+		SELECT salesman,province,city,class_name as classification, SUM(number) number, SUM(price)price
+		FROM
+			(
+		SELECT o.id AS id,l.id AS orderListId,l.product_id AS product_id,l.number number,
+				(l.retail_price * l.number - l.discount_total_price) AS price, p.province AS province, p.province_id AS province_id,
+			c.city AS city,c.city_id AS city_id, o.salesman AS salesman,o.salesman_id AS salesman_id,o.create_time AS createTime,
+			al.class_name,al.classification_id
+		FROM bs_order_list l
+		LEFT JOIN bs_order o ON o.id = l.order_id
+		LEFT JOIN bs_tenant_visualize v ON o.tenant_id = v.tenant_id
+		LEFT JOIN pca_areas a ON a.area_id = v.area_id
+		LEFT JOIN pca_cities c ON c.city_id = a.city_id
+		LEFT JOIN pca_provinces p ON p.province_id = c.province_id
+		LEFT JOIN
+				(
+		SELECT 
+						 tb2.id classification_id,
+							tb2.class_name class_name	,
+							cp.product_id
+		FROM
+							bs_classification tb1
+		LEFT JOIN bs_classification tb2 ON tb1.id = tb2.parent_id
+		LEFT JOIN bs_classification tb3 ON tb2.id = tb3.parent_id
+		LEFT JOIN bs_classification tb4 ON tb3.id = tb4.parent_id
+		LEFT JOIN bs_class_product cp ON cp.classification_id = tb4.id
+				)al ON al.product_id = l.product_id
 		<where>
             <if test="provinceId != null and provinceId !=''">
                 p.province_id =#{provinceId,jdbcType=INTEGER}
@@ -31,7 +44,7 @@
                and o.salesman_id =#{salesmanId,jdbcType=INTEGER}
             </if>
             <if test="classificationId != null and classificationId !=''">
-              and cf.id = #{classificationId,jdbcType=INTEGER}
+              and al.classification_id = #{classificationId,jdbcType=INTEGER}
             </if>
             <if test="startTime != null and startTime !=''">
               and  o.create_time&gt;#{startTime,jdbcType=DATE}
@@ -40,27 +53,39 @@
               and  o.create_time&lt;#{endTime,jdbcType=DATE}
             </if>
            </where>
+           )result
+           GROUP BY  result.salesman_id,result.province_id,result.city_id,result.classification_id
+           )a
       </select>
  
     	
     <select id="queryOrderDetails" resultType="Order" parameterType="HashMap">
-   select  o.id as id ,l.id as orderListId,l.product_id as product_id ,l.number number,(l.retail_price * l.number - l.discount_total_price) as price, p.province as province ,
-	c.city as city ,cf.parent_id as classificationId,o.salesman as salesman,o.create_time as createTime
-	from bs_order_list l
-		left join bs_order o on o.id = l.order_id
-		left join bs_tenant_visualize v on o.tenant_id = v.tenant_id
-		left join pca_areas a on a.area_id = v.area_id
-		left join pca_cities c on c.city_id = a.city_id
-		left join pca_provinces p on p.province_id = c.province_id
-		left join bs_class_product cp on cp.product_id = l.product_id
-		left join bs_classification cf on cf.id = cp.classification_id
-		left join (
-		select o.id as oid ,l.product_id as pid ,cf.id as cf_id
-			from bs_order_list l
-			left join  bs_order o on o.id = l.order_id
-			left join bs_class_product cp on cp.product_id = l.product_id
-			left join bs_classification cf on cf.id = cp.classification_id) al
-			on al.cf_id = cf.parent_id
+  		SELECT salesman,province,city,class_name as classification, SUM(number) number, SUM(price)price
+			FROM
+				(
+			SELECT o.id AS id,l.id AS orderListId,l.product_id AS product_id,l.number number,
+					(l.retail_price * l.number - l.discount_total_price) AS price, p.province AS province, p.province_id AS province_id,
+				c.city AS city,c.city_id AS city_id, o.salesman AS salesman,o.salesman_id AS salesman_id,o.create_time AS createTime,
+				al.class_name,al.classification_id
+			FROM bs_order_list l
+			LEFT JOIN bs_order o ON o.id = l.order_id
+			LEFT JOIN bs_tenant_visualize v ON o.tenant_id = v.tenant_id
+			LEFT JOIN pca_areas a ON a.area_id = v.area_id
+			LEFT JOIN pca_cities c ON c.city_id = a.city_id
+			LEFT JOIN pca_provinces p ON p.province_id = c.province_id
+			LEFT JOIN
+					(
+			SELECT 
+							 tb2.id classification_id,
+								tb2.class_name class_name	,
+								cp.product_id
+			FROM
+								bs_classification tb1
+			LEFT JOIN bs_classification tb2 ON tb1.id = tb2.parent_id
+			LEFT JOIN bs_classification tb3 ON tb2.id = tb3.parent_id
+			LEFT JOIN bs_classification tb4 ON tb3.id = tb4.parent_id
+			LEFT JOIN bs_class_product cp ON cp.classification_id = tb4.id
+					)al ON al.product_id = l.product_id
 			<where>
             <if test="provinceId != null and provinceId !=''">
                and p.province_id = #{provinceId,jdbcType=INTEGER}
@@ -72,7 +97,7 @@
                and o.salesman_id = #{salesmanId,jdbcType=INTEGER}
             </if>
             <if test="classificationId != null and classificationId !=''">
-              and  cf.id=#{classificationId,jdbcType=INTEGER}
+              and al.classification_id=#{classificationId,jdbcType=INTEGER}
             </if>
             <if test="startTime != null and startTime !=''">
               and  o.create_time&gt;= #{startTime,jdbcType=DATE}
@@ -81,7 +106,9 @@
               and o.create_time&lt;= #{endTime,jdbcType=DATE}
             </if>
             </where>
-        order by l.number desc,l.discount_total_price desc
+              )result
+	       GROUP BY  result.salesman_id,result.province_id,result.city_id,result.classification_id
+		ORDER BY number DESC,price DESC
         LIMIT ${start},${pageSize};
     </select>
     

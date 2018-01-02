@@ -53,12 +53,6 @@ public class QueryServiceImpl implements QueryService {
 				order.setClassification(cl.getClassName());
 			}
 		}
-         //遍历orderList 将每个订单里面ClassificationId一致的数据统计起来 将价格累加 数量累加 封装到page中
-          for (Order order : orderList) {
-        	  Order order2 = new Order();
-        	  
-          }
-          
           Page<Order> page = new Page<Order>(orderCount, orderCount/pageSize+1, start, pageSize, orderList);
           
           return page;
@@ -85,15 +79,28 @@ public class QueryServiceImpl implements QueryService {
 	
 	
 	
-//	public Page<Order> queryOrderDetails(Integer start,Integer pageSize, OrderDetailSearchArgs orderDetailSearchArgs) {
-//		
-//		if(start == null ){
-//			start = 0;
-//		}
-//		if(pageSize == null){
-//			pageSize = 20;
-//		}
-//		return queryDao.queryOrderDetails(start,pageSize,orderDetailSearchArgs);
-//	}
+	/**
+	 * 下载查询出来的全部数据
+	 */
+	public List<Order> queryAndDownload(HashMap<String, Object> paramMap) {
+
+		int orderCount = queryDao.queryCount(paramMap);
+
+		paramMap.put("start", 0);
+		paramMap.put("pageSize", orderCount);
+		List<Order> orderList = queryDao.queryOrderDetails(paramMap);
+		// 根据查出来的二级品类id classificationId 查处对应的一级品类id和名称
+		for (Order order : orderList) {
+			Integer classificationId2 = order.getClassificationId();
+
+			System.out.println(classificationId2);
+			Classification cl = queryDao.getParentidByClassificationId(classificationId2);
+			if (cl != null) {
+				order.setClassificationId(cl.getClassificationId());
+				order.setClassification(cl.getClassName());
+			}
+		}
+		return orderList;
+	}
 
 }

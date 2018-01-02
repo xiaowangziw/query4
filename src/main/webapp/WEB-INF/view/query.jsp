@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: peter_peng
-  Date: 2017/5/4
-  Time: 下午2:29
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -40,7 +34,6 @@
         </h1>
       
     </section>
-
        <div class="box">
         <div class="box-header">
             <div class="row">
@@ -77,7 +70,6 @@
                             <label><span style="font-weight:bold;">品类&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <select name="classification" id="classification" aria-controls="example1" class="form-control input-sm"  style="width:110px;height:34px">
                                     <option value="">请选择品类</option>
-                                    <option value="ORDER_SAVED">排气系统</option>
                                    
                                 </select>
                             </label>
@@ -100,10 +92,8 @@
 							<!-- 在这里添加了id  用于js提交 -->
 							<button id = "submit" type="button" class="btn btn-primary">查询</button>
 							<button id = "reset" onClick ="resetParam()" type="button" class="btn btn-primary">重置</button>
-							<!-- <button type="button" style="margin-left:50px" id="btn_download" 
-							class="btn btn-primary" onClick ="exportExcel()">导出excel</button> -->
-							<button type="button" style="margin-left:50px" id="btn_download" class="btn btn-primary" 
-							onClick ="$('#_tab').tableExport({ type: 'excel', escape: 'false' })">导出excel</button>
+							<button type="button" style="margin-left:50px" id="btn_download" 
+							class="btn btn-primary" onClick ="exportExcel()">导出excel</button>
 						</div>
                 </div>
             </div>
@@ -113,14 +103,12 @@
         <table id="_tab" class="table table-bordered table-hover">
             <thead>
             <tr>
-            	<th>订单id</th>
                 <th>省</th>
                 <th>市</th>
                 <th>销售员</th>
                 <th>品类</th>
                 <th>数量</th>
                 <th>金额</th>
-                <th>订单创建日期</th>
             </tr>
             </thead>
             <tbody>
@@ -253,8 +241,7 @@ $(function(){
 	        "language":{"url":"${pageContext.request.contextPath}/AdminLTE/plugins/datatables/language.json"},
 	        "ajax":{"url":"${pageContext.request.contextPath}/toQuery","type":"post"},
 	        "columns": [
-	            { "data":null },
-	            { "data":null },
+       
 	            { "data":null },
 	            { "data":null },
 	            { "data":null },
@@ -268,7 +255,7 @@ $(function(){
 								data : null,
 								render : function(data) {
 
-									return data.id;
+									return data.province;
 								}
 							},
 							{
@@ -276,19 +263,11 @@ $(function(){
 								data : null,
 								render : function(data) {
 
-									return data.province;
-								}
-							},
-							{
-								targets : 2,
-								data : null,
-								render : function(data) {
-
 									return data.city;
 								}
 							},
 							{
-								targets : 3,
+								targets : 2,
 								data : null,
 								render : function(data) {
 
@@ -297,7 +276,7 @@ $(function(){
 							}
 							,
 							{
-								targets : 4,
+								targets : 3,
 								data : null,
 								render : function(data) {
 
@@ -305,26 +284,19 @@ $(function(){
 								}
 							},
 							{
-								targets : 5,
+								targets : 4,
 								data : null,
 								render : function(data) {
 									return data.number;
 								}
 							},
 							{
-								targets : 6,
+								targets : 5,
 								data : null,
 								render : function(data) {
 									return data.price;
 								}
-							},
-							{
-								targets : 7,
-								data : null,
-								render : function(data) {
-									return data.createTime;
-								}
-							} ]
+							}]
 	    } ).on('preXhr.dt',function(e,settings,data) {
 			No=0;
 	    } );
@@ -344,30 +316,56 @@ $(function(){
 				"startTime"  : startTime,
 				"endTime"  : endTime
 			};
-		/* -------------------------------------------------------------------------------------  */
 			var paramTo = {
-		//这是将json对象转成json字符串传递到后台,要不然后台拿不到
 				"param" : JSON.stringify(param)
 			};
-			//oTable.settings()[0].ajax.data = param;
 			oTable.settings()[0].ajax.data = paramTo;
-		/* -------------------------------------------------------------------------------------  */
 			oTable.ajax.reload();
 		}
 		
-		/* 要在_tab下面使用js提交  因为_tab就是用来渲染数据表格的  "#province"传递到后台的是id, */
 		$("#submit").click(function() {
 			window.reloadTable(_tab, "#province","#city", "#salesman","#classification","#startTime","#endTime");
 		});
-		
-		/* 导出数据*/
-		function exportExcel(){
-			
-		}
 	 });
 
+		/* 导出数据*/
+		function exportExcel(){
+			var provinceId = $("#province").val();
+			var cityId = $("#city").val();
+			var salesmanId = $("#salesman").val();
+			var classificationId = $("#classification").val();
+			var startTime = $("#startTime").val();
+			var endTime = $("#endTime").val();
+			var param = {
+				"provinceId" : provinceId,
+				"cityId"  : cityId,
+				"salesmanId"  : salesmanId,
+				"classificationId"  : classificationId,
+				"startTime"  : startTime,
+				"endTime"  : endTime
+			};
+		
+			var p  = JSON.stringify(param).replace("{","").replace("}","");
+			
+			window.location.href = "${pageContext.request.contextPath}/exportExcel?param="+p;
+			
+			/* window.location.href ="${pageContext.request.contextPath}/exportExcel?provinceId="+provinceId+
+			"&cityId="+cityId+"&salesmanId="+salesmanId+"&classificationId="+classificationId+"&startTime="+startTime+"&endTime"; */
+		}
+	
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
