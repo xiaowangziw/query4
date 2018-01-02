@@ -156,7 +156,7 @@ public class QueryController {
 			hashMap.put("classificationId", object.getString("classificationId"));
 			hashMap.put("endTime", object.getString("endTime"));
 			
-			if(object.getString("startTime") == null || object.getString("startTime") ==""){
+			/*if(object.getString("startTime") == null || object.getString("startTime") ==""){
 				 LocalDate now = LocalDate.now();
 				 LocalDate minusMonths = now.minusMonths(3);
 				 hashMap.put("startTime", Date.from(minusMonths.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -164,7 +164,7 @@ public class QueryController {
 			if(object.getString("endTime") == null || object.getString("endTime") ==""){
 				 LocalDate now = LocalDate.now();
 				 hashMap.put("endTime", Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			}
+			}*/
 			return hashMap;
 	}
 	

@@ -11,7 +11,7 @@
 		FROM
 			(
 		SELECT o.id AS id,l.id AS orderListId,l.product_id AS product_id,l.number number,
-				(l.retail_price * l.number - l.discount_total_price) AS price, p.province AS province, p.province_id AS province_id,
+			l.discount_total_price AS price, p.province AS province, p.province_id AS province_id,
 			c.city AS city,c.city_id AS city_id, o.salesman AS salesman,o.salesman_id AS salesman_id,o.create_time AS createTime,
 			al.class_name,al.classification_id
 		FROM bs_order_list l
@@ -47,10 +47,10 @@
               and al.classification_id = #{classificationId,jdbcType=INTEGER}
             </if>
             <if test="startTime != null and startTime !=''">
-              and  o.create_time&gt;#{startTime,jdbcType=DATE}
+              and  o.create_time&gt;=#{startTime,jdbcType=DATE}
             </if>
              <if test="endTime != null and endTime !=''">
-              and  o.create_time&lt;#{endTime,jdbcType=DATE}
+              and  o.create_time&lt;=#{endTime,jdbcType=DATE}
             </if>
            </where>
            )result
@@ -64,7 +64,7 @@
 			FROM
 				(
 			SELECT o.id AS id,l.id AS orderListId,l.product_id AS product_id,l.number number,
-					(l.retail_price * l.number - l.discount_total_price) AS price, p.province AS province, p.province_id AS province_id,
+					l.discount_total_price AS price, p.province AS province, p.province_id AS province_id,
 				c.city AS city,c.city_id AS city_id, o.salesman AS salesman,o.salesman_id AS salesman_id,o.create_time AS createTime,
 				al.class_name,al.classification_id
 			FROM bs_order_list l

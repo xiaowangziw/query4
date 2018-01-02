@@ -91,7 +91,7 @@
                   	<div class="btn-group" role="group" aria-label="..." style="float: left">
 							<!-- 在这里添加了id  用于js提交 -->
 							<button id = "submit" type="button" class="btn btn-primary">查询</button>
-							<button id = "reset" onClick ="resetParam()" type="button" class="btn btn-primary">重置</button>
+							
 							<button type="button" style="margin-left:50px" id="btn_download" 
 							class="btn btn-primary" onClick ="exportExcel()">导出excel</button>
 						</div>
